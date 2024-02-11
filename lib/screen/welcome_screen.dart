@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_story_app/util/constant.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -31,7 +32,9 @@ class MyWelcomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 24.0,),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go('/login');
+                  },
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(Adaptive.w(90), 48.0),
                     backgroundColor: const Color(0xFF1E232C),
@@ -46,7 +49,9 @@ class MyWelcomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 8.0,),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go('/register');
+                  },
                   style: ElevatedButton.styleFrom(
                     fixedSize: Size(Adaptive.w(90), 48.0),
                     backgroundColor: Colors.white,

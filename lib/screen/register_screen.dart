@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_story_app/util/color_schemes.dart';
+import 'package:go_router/go_router.dart';
+import 'package:my_story_app/theme/color_schemes.dart';
+import 'package:my_story_app/theme/text_style.dart';
 import 'package:my_story_app/util/constant.dart';
-import 'package:my_story_app/widget/text_input.dart';
-import 'package:my_story_app/widget/text_input_password.dart';
+import 'package:my_story_app/widget/button_widget.dart';
+import 'package:my_story_app/widget/text_input_widget.dart';
 
 class MyRegisterScreen extends StatelessWidget {
   const MyRegisterScreen({super.key});
@@ -31,28 +33,27 @@ class MyRegisterScreen extends StatelessWidget {
                         ),
                         child: IconButton(
                           icon: Icon(Icons.arrow_back_ios_new),
-                          onPressed: () {},
+                          onPressed: () {
+                            context.pop();
+                          },
                         ),
                       ),
                       SizedBox(
+                        height: 24.0,
+                      ),
+                      Text('Hello! Register to get started', style: myTextTheme.headlineLarge?.copyWith(color: Color(darkColor), fontWeight: FontWeight.bold),),
+                      SizedBox(
                         height: 16.0,
                       ),
-                      Text('Hello! Register to get started'),
-                      MyTextInput(hint: username),
+                      MyTextInput.basic(hint: username),
                       SizedBox(height: 8.0),
-                      MyTextInput(hint: email,),
+                      MyTextInput.basic(hint: email),
                       SizedBox(height: 8.0),
-                      MyTextInputPassword(hint: password, isShowIcon: false),
+                      MyTextInput.password(hint: password),
                       SizedBox(height: 8.0),
-                      MyTextInputPassword(hint: confirmPassword, isShowIcon: false),
-                      SizedBox(height: 16.0),
-                      ElevatedButton(
-                        onPressed: () {
-
-                        },
-                        child: Text('Register'),
-                      ),
-                      SizedBox(height: 80),
+                      MyTextInput.password(hint: confirmPassword),
+                      SizedBox(height: 24.0),
+                      MyButton.filled(text: 'Register', onPressed: () {  }),
                     ],
                   ),
                 ),

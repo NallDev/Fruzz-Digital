@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_story_app/util/constant.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:my_story_app/widget/button_widget.dart';
 
 class MyWelcomeScreen extends StatelessWidget {
   const MyWelcomeScreen({super.key});
@@ -19,58 +19,35 @@ class MyWelcomeScreen extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           Positioned(
-            bottom: 12.h,
+            bottom: 80.0,
             left: 0,
             right: 0,
-            child: Column(
-              children: [
-                Image.asset(
-                  "assets/images/branding.png",
-                  height: Adaptive.w(25),
-                  width: Adaptive.w(35),
-                  fit: BoxFit.fill,
-                ),
-                const SizedBox(height: 24.0,),
-                ElevatedButton(
-                  onPressed: () {
-                    context.go('/login');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: Size(Adaptive.w(90), 48.0),
-                    backgroundColor: const Color(0xFF1E232C),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  Image.asset(
+                    "assets/images/branding.png",
+                    height: 99.0,
+                    width: 141.0,
+                    fit: BoxFit.fill,
                   ),
-                  child: const Text(
-                    login,
-                    style: TextStyle(color: Colors.white),
+                  const SizedBox(
+                    height: 32.0,
                   ),
-                ),
-                const SizedBox(height: 8.0,),
-                ElevatedButton(
-                  onPressed: () {
-                    context.go('/register');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: Size(Adaptive.w(90), 48.0),
-                    backgroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        width: 2.0,
-                        color: Color(0xFF1E232C),
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                  MyButton.filled(
+                    text: login,
+                    onPressed: () => context.go('/login'),
                   ),
-                  child: const Text(
-                    register,
-                    style: TextStyle(
-                      color: Color(0xFF1E232C),
-                    ),
+                  const SizedBox(
+                    height: 16.0,
                   ),
-                ),
-              ],
+                  MyButton.outlined(
+                    text: register,
+                    onPressed: () => context.go('/register'),
+                  ),
+                ],
+              ),
             ),
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_story_app/util/color_schemes.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'navigation/router.dart';
@@ -18,10 +19,8 @@ class MyApp extends StatelessWidget {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
+          theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+          darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
           routeInformationParser: routes.routeInformationParser,
           routerDelegate: routes.routerDelegate,
           routeInformationProvider: routes.routeInformationProvider,

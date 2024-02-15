@@ -13,11 +13,6 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => RegisterProvider(
-            apiService: ApiService(),
-          ),
-        ),
-        ChangeNotifierProvider(
           create: (context) => FormProvider(),
         ),
       ],

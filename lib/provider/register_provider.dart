@@ -28,7 +28,7 @@ class RegisterProvider extends ChangeNotifier {
       _registerState = RegisterState.error;
       notifyListeners();
 
-      return _message = exception.toString();
+      return _message = exception.toString().replaceAll("Exception: ", "");
     }
   }
 }

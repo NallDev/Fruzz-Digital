@@ -8,9 +8,10 @@ class MyTextInput extends StatefulWidget {
   final String hint;
   final bool obscureText;
   final Widget? suffixIcon;
-  final FormProvider formProvider;
+  final FormProvider? formProvider;
   final bool? useEmailValidator;
   final bool? useLengthValidator;
+  final bool? useTextEmptyValidator;
   final String field;
 
   const MyTextInput._({
@@ -18,27 +19,29 @@ class MyTextInput extends StatefulWidget {
     required this.hint,
     this.obscureText = false,
     this.suffixIcon,
-    required this.formProvider,
+    this.formProvider,
     this.useLengthValidator = false,
     this.useEmailValidator = false,
+    this.useTextEmptyValidator = false,
     required this.field,
   }) : super(key: key);
 
   static MyTextInput basic({
     Key? key,
     required String hint,
-    required FormProvider formProvider,
+    FormProvider? formProvider,
     bool? useEmailValidator = false,
+    bool? useTextEmptyValidator = false,
     required String field
   }) {
-    return MyTextInput._(key: key, hint: hint, formProvider: formProvider, useEmailValidator: useEmailValidator, field: field,);
+    return MyTextInput._(key: key, hint: hint, formProvider: formProvider, useEmailValidator: useEmailValidator, field: field, useTextEmptyValidator: useTextEmptyValidator,);
   }
 
   static MyTextInput password({
     Key? key,
     required String hint,
     bool isShowIcon = false,
-    required FormProvider formProvider,
+    FormProvider? formProvider,
     bool? useLengthValidator = false,
     required String field,
   }) {
@@ -67,11 +70,13 @@ class MyTextInputState extends State<MyTextInput> {
     _controller = TextEditingController();
 
     _controller.addListener(() {
-      widget.formProvider.setValue(widget.field, _controller.text);
+      widget.formProvider?.setValue(widget.field, _controller.text);
       if (widget.useEmailValidator == true) {
-        widget.formProvider.validateEmail(widget.field, _controller.text);
+        widget.formProvider?.validateEmail(widget.field, _controller.text);
       } else if (widget.useLengthValidator == true) {
-        widget.formProvider.validateMinEightChar(widget.field, _controller.text);
+        widget.formProvider?.validateMinEightChar(widget.field, _controller.text);
+      } else if (widget.useTextEmptyValidator == true) {
+        widget.formProvider?.validateEmpty(widget.field, _controller.text);
       }
     });
   }
@@ -110,7 +115,7 @@ class MyTextInputState extends State<MyTextInput> {
         fillColor: const Color(backgroundColor),
         hintText: widget.hint,
         hintStyle: const TextStyle(color: Color(grayColor), fontWeight: FontWeight.w400),
-        errorText: widget.formProvider.getErrorText(widget.field),
+        errorText: widget.formProvider?.getErrorText(widget.field),
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
           borderSide: BorderSide(width: 1, color: Color(primaryColor)),

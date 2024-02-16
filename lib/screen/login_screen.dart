@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
-import '../provider/form_provider.dart';
 import '../theme/color_schemes.dart';
 import '../theme/text_style.dart';
 import '../util/constant.dart';
@@ -53,25 +51,15 @@ class MyLoginScreen extends StatelessWidget {
                       SizedBox(
                         height: 16.0,
                       ),
-                      Consumer<FormProvider>(
-                        builder: (context, formProvider, child) {
-                          return MyTextInput.basic(
-                            field: email,
-                            hint: email,
-                            formProvider: formProvider,
-                          );
-                        },
+                      MyTextInput.basic(
+                        field: email,
+                        hint: email,
                       ),
                       SizedBox(height: 8.0),
-                      Consumer<FormProvider>(
-                        builder: (context, formProvider, child) {
-                          return MyTextInput.password(
-                              field: password,
-                              hint: password,
-                              formProvider: formProvider,
-                              useLengthValidator: true);
-                        },
-                      ),
+                      MyTextInput.password(
+                          field: password,
+                          hint: password,
+                          useLengthValidator: true),
                       SizedBox(height: 24.0),
                       MyButton.filled(text: login, onPressed: () {}),
                     ],

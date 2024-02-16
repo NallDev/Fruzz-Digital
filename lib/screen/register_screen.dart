@@ -16,8 +16,17 @@ class MyRegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => RegisterProvider(apiService: ApiService()),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => RegisterProvider(
+            apiService: ApiService(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FormProvider(),
+        ),
+      ],
       child: Scaffold(
         body: SafeArea(
           child: Consumer<RegisterProvider>(
@@ -25,14 +34,17 @@ class MyRegisterScreen extends StatelessWidget {
               if (registerProvider.registerState == RegisterState.success) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(registerProvider.message.toString())),
+                    SnackBar(
+                        content: Text(registerProvider.message.toString())),
                   );
                   context.go('/login');
                 });
-              } else if (registerProvider.registerState == RegisterState.error) {
+              } else if (registerProvider.registerState ==
+                  RegisterState.error) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(registerProvider.message.toString())),
+                    SnackBar(
+                        content: Text(registerProvider.message.toString())),
                   );
                 });
               }
@@ -83,6 +95,7 @@ class MyRegisterScreen extends StatelessWidget {
                                       field: usernameRegister,
                                       hint: username,
                                       formProvider: formProvider,
+                                      useTextEmptyValidator: true,
                                     );
                                   },
                                 ),
@@ -111,21 +124,34 @@ class MyRegisterScreen extends StatelessWidget {
                                 const SizedBox(height: 24.0),
                                 Consumer<FormProvider>(
                                   builder: (context, formProvider, child) {
-                                    return MyButton.filled(
-                                      text: 'Register',
-                                      onPressed: () {
-                                        context
-                                            .read<RegisterProvider>()
-                                            .doRegister(
-                                              formProvider
-                                                  .getValue(usernameRegister),
-                                              formProvider
-                                                  .getValue(emailRegister),
-                                              formProvider
-                                                  .getValue(passwordRegister),
-                                            );
-                                      },
-                                    );
+                                    if (formProvider.isValid(emailRegister) ==
+                                            true &&
+                                        formProvider
+                                                .isValid(passwordRegister) ==
+                                            true &&
+                                        formProvider
+                                                .isValid(usernameRegister) ==
+                                            true) {
+                                      return MyButton.filled(
+                                        text: 'Register',
+                                        onPressed: () {
+                                          context
+                                              .read<RegisterProvider>()
+                                              .doRegister(
+                                                formProvider
+                                                    .getValue(usernameRegister),
+                                                formProvider
+                                                    .getValue(emailRegister),
+                                                formProvider
+                                                    .getValue(passwordRegister),
+                                              );
+                                        },
+                                      );
+                                    } else {
+                                      return MyButton.disabled(
+                                        text: register,
+                                      );
+                                    }
                                   },
                                 ),
                               ],

@@ -63,20 +63,21 @@ class MyRegisterScreen extends StatelessWidget {
                                 const SizedBox(
                                   height: 8.0,
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: const Color(borderColor),
-                                          width: 1),
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8.0)),
-                                  child: IconButton(
-                                    icon: const Icon(Icons.arrow_back_ios_new),
-                                    onPressed: () {
-                                      context.pop();
-                                    },
+                                if (GoRouter.of(context).canPop()) ...[
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        border:
+                                        Border.all(color: Color(borderColor), width: 1),
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8.0)),
+                                    child: IconButton(
+                                      icon: Icon(Icons.arrow_back_ios_new),
+                                      onPressed: () {
+                                        context.pop();
+                                      },
+                                    ),
                                   ),
-                                ),
+                                ],
                                 const SizedBox(
                                   height: 24.0,
                                 ),
@@ -174,7 +175,13 @@ class MyRegisterScreen extends StatelessWidget {
                                 width: 8.0,
                               ),
                               GestureDetector(
-                                onTap: () => context.push('/login'),
+                                onTap: () {
+                                  if (GoRouter.of(context).canPop()) {
+                                    context.pop();
+                                  } else {
+                                    context.push('/login');
+                                  }
+                                },
                                 child: const Text(
                                   'Login Now',
                                   style: TextStyle(color: Color(0xFF35C2C1)),

@@ -1,8 +1,7 @@
 import 'package:go_router/go_router.dart';
-
-import '../screen/login_screen.dart';
-import '../screen/register_screen.dart';
-import '../screen/welcome_screen.dart';
+import 'package:my_story_app/screen/login_screen.dart';
+import 'package:my_story_app/screen/register_screen.dart';
+import 'package:my_story_app/screen/welcome_screen.dart';
 
 final routes = GoRouter(
   initialLocation: '/',

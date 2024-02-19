@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_story_app/data/network/api_service.dart';
-import 'package:my_story_app/provider/form_provider.dart';
-import 'package:my_story_app/provider/register_provider.dart';
 import 'package:my_story_app/theme/color_schemes.dart';
 import 'package:my_story_app/theme/text_style.dart';
-import 'package:provider/provider.dart';
 
-import 'navigation/router.dart';
+import 'routing//router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,12 +17,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Story App',
       theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: lightColorScheme,
-          textTheme: myTextTheme),
+        useMaterial3: true,
+        colorScheme: lightColorScheme,
+        textTheme: myTextTheme,
+      ),
       routeInformationParser: routes.routeInformationParser,
       routerDelegate: routes.routerDelegate,
       routeInformationProvider: routes.routeInformationProvider,
+      backButtonDispatcher: RootBackButtonDispatcher(),
     );
   }
 }

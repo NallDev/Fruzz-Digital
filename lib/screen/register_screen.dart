@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_story_app/data/model/register/register_response.dart';
 import 'package:my_story_app/data/network/api_service.dart';
 import 'package:my_story_app/provider/register_provider.dart';
 import 'package:my_story_app/theme/color_schemes.dart';
 import 'package:my_story_app/theme/text_style.dart';
 import 'package:my_story_app/util/constant.dart';
+import 'package:my_story_app/util/ui_state.dart';
 import 'package:my_story_app/widget/button_widget.dart';
 import 'package:my_story_app/widget/text_input_widget.dart';
 import 'package:provider/provider.dart';
@@ -31,20 +33,22 @@ class MyRegisterScreen extends StatelessWidget {
         body: SafeArea(
           child: Consumer<RegisterProvider>(
             builder: (context, registerProvider, child) {
-              if (registerProvider.registerState == RegisterState.success) {
+              final registerState = registerProvider.registerState;
+
+              if (registerState is Success) {
+                final data = registerState.data as RegisterResponse;
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                        content: Text(registerProvider.message.toString())),
+                        content: Text(data.message)),
                   );
                   context.go('/login');
                 });
-              } else if (registerProvider.registerState ==
-                  RegisterState.error) {
+              } else if (registerState is Error) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                        content: Text(registerProvider.message.toString())),
+                        content: Text(registerState.message)),
                   );
                 });
               }
@@ -67,11 +71,11 @@ class MyRegisterScreen extends StatelessWidget {
                                   Container(
                                     decoration: BoxDecoration(
                                         border:
-                                        Border.all(color: Color(borderColor), width: 1),
+                                        Border.all(color: const Color(borderColor), width: 1),
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(8.0)),
                                     child: IconButton(
-                                      icon: Icon(Icons.arrow_back_ios_new),
+                                      icon: const Icon(Icons.arrow_back_ios_new),
                                       onPressed: () {
                                         context.pop();
                                       },
@@ -193,8 +197,8 @@ class MyRegisterScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (registerProvider.registerState ==
-                      RegisterState.loading) ...[
+                  if (registerProvider.registerState is
+                      Loading) ...[
                     const Center(
                       child: CircularProgressIndicator(
                         color: Color(primaryColor),

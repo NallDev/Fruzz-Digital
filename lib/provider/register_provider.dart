@@ -1,36 +1,26 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_story_app/data/network/api_service.dart';
+import 'package:my_story_app/util/ui_state.dart';
 
 class RegisterProvider extends ChangeNotifier {
   final ApiService apiService;
 
-  RegisterState? _registerState;
-  String? _message;
-  bool _isErrorRegister = true;
+  UiState _registerState = const Idle();
 
   RegisterProvider({required this.apiService});
 
-  RegisterState? get registerState => _registerState;
-  String? get message => _message;
-  bool get isErrorRegister => _isErrorRegister;
+  UiState get registerState => _registerState;
 
-  Future<dynamic> doRegister(String name, String email, String password) async {
-    _registerState = RegisterState.loading;
+  Future doRegister(String name, String email, String password) async {
+    _registerState = const Loading();
     notifyListeners();
     try {
       final register = await apiService.doRegister(name, email, password);
-      _registerState = RegisterState.success;
-      notifyListeners();
-
-      _isErrorRegister = register.error;
-      return _message = register.message;
+      _registerState = Success(register);
     } catch (exception) {
-      _registerState = RegisterState.error;
+      _registerState = Error(exception.toString().replaceAll("Exception: ", ""));
+    } finally {
       notifyListeners();
-
-      return _message = exception.toString().replaceAll("Exception: ", "");
     }
   }
 }
-
-enum RegisterState {loading, success, error}

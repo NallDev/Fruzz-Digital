@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import '../model/register/register_response.dart';
 
 class ApiService {
-  static const String _baseUrl = "https://story-api.dicoding.dev/v1/";
+  static const String _baseUrl = "https://story-api.dicoding.dev/v1";
 
   Future<RegisterResponse> doRegister(
       String name, String email, String password) async {
@@ -21,17 +21,18 @@ class ApiService {
       final response = await http.post(Uri.parse("$_baseUrl/register"),
           headers: headers, body: body);
 
+      final stringJson = json.decode(response.body);
+      var registerResponse = RegisterResponse.fromJson(stringJson);
+
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        final responseData = json.decode(response.body);
-        return RegisterResponse.fromJson(responseData);
+        return registerResponse;
       } else {
-        final errorData = json.decode(response.body);
-        throw Exception('Failed to register: ${errorData["message"]}');
+        throw Exception('Failed register because ${registerResponse.message}');
       }
     } on SocketException catch (_) {
       throw Exception('Please check your internet connection');
     } catch (e) {
-      throw Exception('Something error, please try again later');
+      throw Exception(e.toString());
     }
   }
 }

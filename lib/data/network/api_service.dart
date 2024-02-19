@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
+import 'package:my_story_app/data/model/login/login_response.dart';
 
 import '../model/register/register_response.dart';
 
@@ -27,7 +28,33 @@ class ApiService {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return registerResponse;
       } else {
-        throw Exception('Failed register because ${registerResponse.message}');
+        throw Exception('Register failed because ${registerResponse.message}');
+      }
+    } on SocketException catch (_) {
+      throw Exception('Please check your internet connection');
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<LoginResult> doLogin(String email, String password) async {
+    var headers = {'Content-Type': 'application/json'};
+    var body = json.encode({
+      'email': email,
+      'password': password,
+    });
+
+    try {
+      final response = await http.post(Uri.parse("$_baseUrl/login"),
+          headers: headers, body: body);
+
+      final stringJson = json.decode(response.body);
+      var loginResponse = LoginResponse.fromJson(stringJson);
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        return loginResponse.loginResult!;
+      } else {
+        throw Exception('Login failed because ${loginResponse.message}');
       }
     } on SocketException catch (_) {
       throw Exception('Please check your internet connection');

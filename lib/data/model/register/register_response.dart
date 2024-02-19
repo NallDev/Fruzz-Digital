@@ -1,6 +1,3 @@
-import 'package:meta/meta.dart';
-import 'dart:convert';
-
 class RegisterResponse {
   final bool error;
   final String message;

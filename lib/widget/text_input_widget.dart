@@ -43,6 +43,7 @@ class MyTextInput extends StatefulWidget {
     bool isShowIcon = false,
     FormProvider? formProvider,
     bool? useLengthValidator = false,
+    bool? useTextEmptyValidator = false,
     required String field,
   }) {
     Widget? icon = isShowIcon
@@ -52,7 +53,7 @@ class MyTextInput extends StatefulWidget {
     )
         : null;
     return MyTextInput._(
-        key: key, hint: hint, obscureText: true, suffixIcon: icon, formProvider: formProvider, useLengthValidator: useLengthValidator, field: field,);
+        key: key, hint: hint, obscureText: true, suffixIcon: icon, formProvider: formProvider, useLengthValidator: useLengthValidator, field: field, useTextEmptyValidator: useTextEmptyValidator,);
   }
 
   @override

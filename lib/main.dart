@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_story_app/theme/color_schemes.dart';
 import 'package:my_story_app/theme/text_style.dart';
 
-import 'routing//router.dart';
+import 'routing/router.dart';
 
 void main() {
   runApp(const MyApp());

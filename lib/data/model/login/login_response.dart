@@ -34,4 +34,10 @@ class LoginResult {
     name: json["name"],
     token: json["token"],
   );
+
+  Map<String, dynamic> toJson() => {
+    "userId": userId,
+    "name": name,
+    "token": token,
+  };
 }

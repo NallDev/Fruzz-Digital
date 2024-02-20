@@ -264,14 +264,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  form_validation:
-    dependency: "direct main"
-    description:
-      name: form_validation
-      sha256: "35e34d4dbc4b33dae40e168c8e70eb3d8bd3ce7bc139070e7df0fabd5563980b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.1+4"
   go_router:
     dependency: "direct main"
     description:
@@ -392,14 +384,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
-  intl:
-    dependency: transitive
-    description:
-      name: intl
-      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.19.0"
   js:
     dependency: transitive
     description:
@@ -408,14 +392,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.0"
-  json_class:
-    dependency: transitive
-    description:
-      name: json_class
-      sha256: b9dcfc5331b2239ef0195bcce3bd4ca5ea51f4939414cdda8f39c1703310655e
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0+12"
   lints:
     dependency: transitive
     description:

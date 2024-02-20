@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:my_story_app/data/model/login/login_response.dart';
 import 'package:my_story_app/data/network/api_service.dart';
 import 'package:my_story_app/provider/form_provider.dart';
 import 'package:my_story_app/provider/login_provider.dart';
+import 'package:my_story_app/util/ui_helper.dart';
 import 'package:my_story_app/util/ui_state.dart';
+import 'package:my_story_app/widget/loading_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../theme/color_schemes.dart';
@@ -35,17 +36,30 @@ class MyLoginScreen extends StatelessWidget {
             builder: (context, loginProvider, child) {
               final loginState = loginProvider.loginState;
               if (loginState is Success) {
-                final data = loginState.data as LoginResult;
+                if (GoRouter.of(context).canPop()) {
+                  context.pop();
+                }
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Login Success')),
-                  );
-                  context.go('/');
+                  showToast(context, "Login Success");
+                  Future.delayed(const Duration(seconds: 2), () {
+                    context.go('/');
+                  });
                 });
               } else if (loginState is Error) {
+                if (GoRouter.of(context).canPop()) {
+                  context.pop();
+                }
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(loginState.message)),
+                  showToast(context, loginState.message);
+                });
+              } else if (loginState is Loading) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return const MyLoadingWidget();
+                    },
                   );
                 });
               }
@@ -55,67 +69,68 @@ class MyLoginScreen extends StatelessWidget {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Consumer<FormProvider>(
                           builder: (context, formProvider, child) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 8.0,
                                 ),
                                 if (GoRouter.of(context).canPop()) ...[
                                   Container(
                                     decoration: BoxDecoration(
                                         border: Border.all(
-                                            color: Color(borderColor),
+                                            color: const Color(borderColor),
                                             width: 1),
                                         color: Colors.white,
                                         borderRadius:
-                                            BorderRadius.circular(8.0)),
+                                        BorderRadius.circular(8.0)),
                                     child: IconButton(
-                                      icon: Icon(Icons.arrow_back_ios_new),
+                                      icon: const Icon(Icons.arrow_back_ios_new),
                                       onPressed: () {
                                         context.pop();
                                       },
                                     ),
                                   ),
                                 ],
-                                SizedBox(
+                                const SizedBox(
                                   height: 24.0,
                                 ),
                                 Text(
                                   'Welcome back! Glad to see you, Again!',
-                                  style: myTextTheme.headlineLarge?.copyWith(
-                                      color: Color(darkColor),
+                                  style: myTextTheme.headlineLarge
+                                      ?.copyWith(
+                                      color: const Color(darkColor),
                                       fontWeight: FontWeight.bold),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 16.0,
                                 ),
                                 MyTextInput.basic(
-                                  field: email,
-                                  hint: email,
-                                  formProvider: formProvider,
-                                  useTextEmptyValidator: true
-                                ),
-                                SizedBox(height: 8.0),
+                                    field: email,
+                                    hint: email,
+                                    formProvider: formProvider,
+                                    useTextEmptyValidator: true),
+                                const SizedBox(height: 8.0),
                                 MyTextInput.password(
                                   field: password,
                                   hint: password,
                                   formProvider: formProvider,
                                   useTextEmptyValidator: true,
                                 ),
-                                SizedBox(height: 24.0),
+                                const SizedBox(height: 24.0),
                                 if (formProvider.isValid(email) == true &&
-                                    formProvider.isValid(password) == true) ...[
+                                    formProvider.isValid(password) ==
+                                        true) ...[
                                   MyButton.filled(
                                     text: login,
                                     onPressed: () {
                                       context.read<LoginProvider>().doLogin(
-                                            formProvider.getValue(email),
-                                            formProvider.getValue(password),
-                                          );
+                                        formProvider.getValue(email),
+                                        formProvider.getValue(password),
+                                      );
                                     },
                                   ),
                                 ] else ...[
@@ -137,11 +152,11 @@ class MyLoginScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Don’t have an account?',
                             style: TextStyle(color: Color(0xFF1E232C)),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 8.0,
                           ),
                           GestureDetector(
@@ -152,7 +167,7 @@ class MyLoginScreen extends StatelessWidget {
                                 context.push('/register');
                               }
                             },
-                            child: Text(
+                            child: const Text(
                               'Register Now',
                               style: TextStyle(color: Color(0xFF35C2C1)),
                             ),

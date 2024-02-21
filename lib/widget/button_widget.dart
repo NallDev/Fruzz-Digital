@@ -32,7 +32,7 @@ class MyButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            minimumSize: Size(double.infinity, 64.0)),
+            minimumSize: const Size(double.infinity, 64.0)),
         child: Text(text),
       );
     } else if (style == ButtonStyle.outlined) {
@@ -45,7 +45,7 @@ class MyButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          minimumSize: Size(double.infinity, 64.0),
+          minimumSize: const Size(double.infinity, 64.0),
         ),
         child: Text(text),
       );
@@ -56,7 +56,7 @@ class MyButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            minimumSize: Size(double.infinity, 64.0)),
+            minimumSize: const Size(double.infinity, 64.0)),
         child: Text(text),
       );
     }

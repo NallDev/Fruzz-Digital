@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_story_app/data/local/preferences_helper.dart';
+import 'package:my_story_app/util/constant.dart';
 
 import '../data/network/api_service.dart';
 import '../util/ui_state.dart';
@@ -22,7 +23,7 @@ class LoginProvider extends ChangeNotifier {
       await PreferencesHelper().setSession(loginResult);
       getSession();
     } catch (exception) {
-      _loginState = Error(exception.toString().replaceAll("Exception: ", ""));
+      _loginState = Error(exception.toString().replaceAll("Exception: ", textEmpty));
     } finally {
       notifyListeners();
     }
@@ -33,7 +34,7 @@ class LoginProvider extends ChangeNotifier {
     if (session != null) {
       _loginState = Success(session);
     } else {
-      _loginState = const Error("Your session cannot be store");
+      _loginState = const Error(sessionNotStoreMsg);
     }
   }
 }

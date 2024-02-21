@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_story_app/data/network/api_service.dart';
+import 'package:my_story_app/util/constant.dart';
 import 'package:my_story_app/util/ui_state.dart';
 
 class RegisterProvider extends ChangeNotifier {
@@ -18,7 +19,7 @@ class RegisterProvider extends ChangeNotifier {
       final register = await apiService.doRegister(name, email, password);
       _registerState = Success(register);
     } catch (exception) {
-      _registerState = Error(exception.toString().replaceAll("Exception: ", ""));
+      _registerState = Error(exception.toString().replaceAll("Exception: ", textEmpty));
     } finally {
       notifyListeners();
     }

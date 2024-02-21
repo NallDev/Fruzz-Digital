@@ -2,20 +2,21 @@ import 'package:go_router/go_router.dart';
 import 'package:my_story_app/screen/login_screen.dart';
 import 'package:my_story_app/screen/register_screen.dart';
 import 'package:my_story_app/screen/welcome_screen.dart';
+import 'package:my_story_app/util/constant.dart';
 
 final routes = GoRouter(
-  initialLocation: '/',
+  initialLocation: welcomePath,
   routes: [
     GoRoute(
-      path: '/',
+      path: welcomePath,
       builder: (context, state) => const MyWelcomeScreen(),
     ),
     GoRoute(
-      path: '/login',
+      path: loginPath,
       builder: (context, state) => const MyLoginScreen(),
     ),
     GoRoute(
-      path: '/register',
+      path: registerPath,
       builder: (context, state) => const MyRegisterScreen(),
     ),
   ],

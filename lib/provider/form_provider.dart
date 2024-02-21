@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
+import 'package:my_story_app/util/constant.dart';
 
 class FormProvider extends ChangeNotifier {
   final Map<String, String> _values = {};
   final Map<String, String?> _errorTexts = {};
   final Map<String, bool> _isValid = {};
 
-  String getValue(String field) => _values[field] ?? '';
+  String getValue(String field) => _values[field] ?? textEmpty;
   String? getErrorText(String field) => _errorTexts[field];
   bool? isValid(String field) => _isValid[field];
 
@@ -22,7 +23,7 @@ class FormProvider extends ChangeNotifier {
 
     if (!emailRegex.hasMatch(value)) {
       _isValid[field] = false;
-      _errorTexts[field] = 'Enter a valid email address';
+      _errorTexts[field] = emailValidatorMsg;
     } else {
       _isValid[field] = true;
       _errorTexts[field] = null;
@@ -33,7 +34,7 @@ class FormProvider extends ChangeNotifier {
   void validateMinEightChar(String field, String value) {
     if (value.length < 8) {
       _isValid[field] = false;
-      _errorTexts[field] = 'Enter min 8 characters';
+      _errorTexts[field] = charLengthValidatorMsg;
     } else {
       _isValid[field] = true;
       _errorTexts[field] = null;
@@ -44,7 +45,7 @@ class FormProvider extends ChangeNotifier {
   void validateEmpty(String field, String value) {
     if (value.isEmpty) {
       _isValid[field] = false;
-      _errorTexts[field] = 'This field cannot be empty';
+      _errorTexts[field] = textEmptyValidatorMsg;
     } else {
       _isValid[field] = true;
       _errorTexts[field] = null;

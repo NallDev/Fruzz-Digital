@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:my_story_app/data/model/login/login_response.dart';
+import 'package:my_story_app/util/constant.dart';
 
 import '../model/register/register_response.dart';
 
@@ -28,10 +29,10 @@ class ApiService {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return registerResponse;
       } else {
-        throw Exception('Register failed because ${registerResponse.message}');
+        throw Exception(registerResponse.message);
       }
     } on SocketException catch (_) {
-      throw Exception('Please check your internet connection');
+      throw Exception(noConnectionMsg);
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -54,10 +55,10 @@ class ApiService {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return loginResponse.loginResult!;
       } else {
-        throw Exception('Login failed because ${loginResponse.message}');
+        throw Exception(loginResponse.message);
       }
     } on SocketException catch (_) {
-      throw Exception('Please check your internet connection');
+      throw Exception(noConnectionMsg);
     } catch (e) {
       throw Exception(e.toString());
     }

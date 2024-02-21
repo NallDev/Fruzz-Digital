@@ -15,7 +15,7 @@ class MyWelcomeScreen extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            "assets/images/background_welcome.png",
+            assetBackgroundWelcome,
             fit: BoxFit.cover,
           ),
           Positioned(
@@ -27,7 +27,7 @@ class MyWelcomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Image.asset(
-                    "assets/images/branding.png",
+                    assetBranding,
                     height: 99.0,
                     width: 141.0,
                     fit: BoxFit.fill,
@@ -37,14 +37,14 @@ class MyWelcomeScreen extends StatelessWidget {
                   ),
                   MyButton.filled(
                     text: login,
-                    onPressed: () => context.go('/login'),
+                    onPressed: () => context.go(loginPath),
                   ),
                   const SizedBox(
                     height: 16.0,
                   ),
                   MyButton.outlined(
                     text: register,
-                    onPressed: () => context.go('/register'),
+                    onPressed: () => context.go(registerPath),
                   ),
                 ],
               ),

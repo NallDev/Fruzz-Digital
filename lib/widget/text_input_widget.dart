@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:my_story_app/util/constant.dart';
 
 import '../provider/form_provider.dart';
 import '../theme/color_schemes.dart';
@@ -48,7 +49,7 @@ class MyTextInput extends StatefulWidget {
   }) {
     Widget? icon = isShowIcon
         ? SvgPicture.asset(
-      "assets/images/eye_filled.svg",
+      assetEyeFilled,
       fit: BoxFit.scaleDown,
     )
         : null;

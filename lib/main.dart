@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_story_app/theme/color_schemes.dart';
 import 'package:my_story_app/theme/text_style.dart';
+import 'package:my_story_app/util/constant.dart';
 
 import 'routing/router.dart';
 
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Story App',
+      title: appName,
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: lightColorScheme,

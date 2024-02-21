@@ -40,9 +40,9 @@ class MyLoginScreen extends StatelessWidget {
                   context.pop();
                 }
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showToast(context, "Login Success");
+                  showToast(context, loginSuccess);
                   Future.delayed(const Duration(seconds: 2), () {
-                    context.go('/');
+                    context.go(welcomePath);
                   });
                 });
               } else if (loginState is Error) {
@@ -99,7 +99,7 @@ class MyLoginScreen extends StatelessWidget {
                                   height: 24.0,
                                 ),
                                 Text(
-                                  'Welcome back! Glad to see you, Again!',
+                                  loginGreeting,
                                   style: myTextTheme.headlineLarge
                                       ?.copyWith(
                                       color: const Color(darkColor),
@@ -145,7 +145,7 @@ class MyLoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     height: 80,
                     child: Center(
@@ -153,7 +153,7 @@ class MyLoginScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            'Don’t have an account?',
+                            dontHaveAnAccount,
                             style: TextStyle(color: Color(0xFF1E232C)),
                           ),
                           const SizedBox(
@@ -164,11 +164,11 @@ class MyLoginScreen extends StatelessWidget {
                               if (GoRouter.of(context).canPop()) {
                                 context.pop();
                               } else {
-                                context.push('/register');
+                                context.push(registerPath);
                               }
                             },
                             child: const Text(
-                              'Register Now',
+                              registerNow,
                               style: TextStyle(color: Color(0xFF35C2C1)),
                             ),
                           )

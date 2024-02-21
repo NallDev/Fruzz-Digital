@@ -1,4 +1,6 @@
-const String appName = 'FeeNal';
+const String appName = 'Fruzzdigital';
+const String fruzz = "Fruzz";
+const String digital = "digital";
 const String register = "Register";
 const String login = "Login";
 const String username = "Username";
@@ -23,6 +25,7 @@ const String loginNow = 'Login Now';
 const String loginSuccess = "Login Success";
 const String registerSuccess = "Register Success, You can login with that account";
 const String noConnectionMsg = 'Please check your internet connection';
+const String addStory = 'Add Story';
 
 const String sessionKey = 'session';
 
@@ -34,3 +37,4 @@ const String assetBranding = "assets/images/branding.png";
 const String welcomePath = '/';
 const String registerPath = '/register';
 const String loginPath = '/login';
+const String storyPath = '/story';

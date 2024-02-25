@@ -26,6 +26,7 @@ const String loginSuccess = "Login Success";
 const String registerSuccess = "Register Success, You can login with that account";
 const String noConnectionMsg = 'Please check your internet connection';
 const String addStory = 'Add Story';
+const String deleteSessionErrorMsg = "Error when deleting session";
 
 const String sessionKey = 'session';
 
@@ -38,3 +39,4 @@ const String welcomePath = '/';
 const String registerPath = '/register';
 const String loginPath = '/login';
 const String storyPath = '/story';
+const String cameraPath = '/camera';

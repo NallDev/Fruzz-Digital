@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:my_story_app/screen/camera_screen.dart';
 import 'package:my_story_app/screen/login_screen.dart';
 import 'package:my_story_app/screen/register_screen.dart';
 import 'package:my_story_app/screen/welcome_screen.dart';
@@ -9,6 +10,8 @@ import '../screen/story_screen.dart';
 GoRouter createAppRouter(bool hasSession) {
   return GoRouter(
     initialLocation: hasSession ? storyPath : welcomePath,
+    debugLogDiagnostics: true,
+    
     routes: [
       GoRoute(
         path: welcomePath,
@@ -25,6 +28,10 @@ GoRouter createAppRouter(bool hasSession) {
       GoRoute(
         path: storyPath,
         builder: (context, state) => MyStoryScreen(),
+      ),
+      GoRoute(
+        path: cameraPath,
+        builder: (context, state) => const MyCameraScreen(),
       ),
     ],
   );

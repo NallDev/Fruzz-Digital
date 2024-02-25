@@ -19,7 +19,7 @@ class CircleStory extends StatelessWidget {
             height: 3.0,
           ),
           AnimatedDashedCircle().show(
-            image: AssetImage(image),
+            image: NetworkImage(image),
             autoPlay: true,
             contentPadding: 2,
             height: 54.0,

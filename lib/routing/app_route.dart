@@ -24,7 +24,7 @@ GoRouter createAppRouter(bool hasSession) {
       ),
       GoRoute(
         path: storyPath,
-        builder: (context, state) => const MyStoryScreen(),
+        builder: (context, state) => MyStoryScreen(),
       ),
     ],
   );

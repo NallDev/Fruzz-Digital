@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class StoriesResponse {
   final bool error;
   final String message;
@@ -30,8 +28,8 @@ class ListStory {
   final String description;
   final String photoUrl;
   final DateTime createdAt;
-  final double lat;
-  final double lon;
+  final double? lat;
+  final double? lon;
 
   ListStory({
     required this.id,
@@ -39,8 +37,8 @@ class ListStory {
     required this.description,
     required this.photoUrl,
     required this.createdAt,
-    required this.lat,
-    required this.lon,
+    this.lat,
+    this.lon,
   });
 
   factory ListStory.fromJson(Map<String, dynamic> json) => ListStory(

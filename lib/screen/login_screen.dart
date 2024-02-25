@@ -42,7 +42,7 @@ class MyLoginScreen extends StatelessWidget {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   showToast(context, loginSuccess);
                   Future.delayed(const Duration(seconds: 2), () {
-                    context.go(welcomePath);
+                    context.go(storyPath);
                   });
                 });
               } else if (loginState is Error) {

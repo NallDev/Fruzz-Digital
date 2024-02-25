@@ -32,7 +32,7 @@ class MainStory extends StatelessWidget {
                     Radius.circular(32),
                   ),
                   image: DecorationImage(
-                      image: AssetImage(image),
+                      image: NetworkImage(image),
                       fit: BoxFit.cover),
                 ),
               ),
@@ -56,7 +56,7 @@ class MainStory extends StatelessWidget {
         SizedBox(
           height: 4.0,
         ),
-        Image.asset(
+        Image.network(
           image,
           fit: BoxFit.cover,
           width: double.infinity,
@@ -94,14 +94,10 @@ class MainStory extends StatelessWidget {
                       width: 4,
                     ),
                   ),
-                  TextSpan(
-                    text: "...See more",
-                    style: myTextTheme.labelSmall?.copyWith(
-                      color: Colors.grey[400],
-                    ),
-                  ),
                 ]),
             textAlign: TextAlign.start,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],

@@ -39,10 +39,7 @@ dependencies:
   provider: ^6.1.1
   http: ^1.2.0
   shared_preferences: ^2.2.2
-  path_provider: ^2.1.2
-  open_file: ^3.3.2
-  camerawesome: ^2.0.1
-  image_picker_plus: ^0.5.9
+  image_picker: ^1.0.7
   animated_dashed_circle: ^0.0.5
   lottie: ^3.0.0
   pull_to_refresh: ^2.0.0

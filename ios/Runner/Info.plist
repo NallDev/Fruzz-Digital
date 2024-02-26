@@ -46,13 +46,11 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 
-	<key>NSCameraUsageDescription</key>
-    <string>Your own description</string>
-
-    <key>NSMicrophoneUsageDescription</key>
-    <string>To enable microphone access when recording video</string>
-
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>To enable GPS location access for Exif data</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>your usage description here</string>
+<key>NSCameraUsageDescription</key>
+<string>your usage description here</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>your usage description here</string>
 </dict>
 </plist>

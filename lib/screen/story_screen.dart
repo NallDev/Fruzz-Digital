@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_story_app/data/local/preferences_helper.dart';
 import 'package:my_story_app/provider/stories_provider.dart';
 import 'package:my_story_app/theme/text_style.dart';
@@ -23,6 +24,7 @@ class MyStoryScreen extends StatelessWidget {
     final storiesState = context.watch<StoriesProvider>().storiesState;
     final randomStories = context.watch<StoriesProvider>().randomStory;
     final mainStories = context.watch<StoriesProvider>().listStory;
+    final ImagePicker picker = ImagePicker();
 
     if (storiesState is Error) {
       _refreshController.refreshCompleted();
@@ -91,8 +93,8 @@ class MyStoryScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () {
-                            context.push(cameraPath);
+                          onTap: () async {
+                            await picker.pickImage(source: ImageSource.gallery);
                           },
                           child: Container(
                             width: 56.0,

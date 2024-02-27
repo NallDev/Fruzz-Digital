@@ -31,7 +31,7 @@ GoRouter createAppRouter(bool hasSession) {
       ),
       GoRoute(
         path: cameraPath,
-        builder: (context, state) => CameraScreen(),
+        builder: (context, state) => MyCameraScreen(),
       ),
     ],
   );

@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:my_story_app/screen/CameraScreen.dart';
+import 'package:my_story_app/screen/camera_screen.dart';
 import 'package:my_story_app/screen/login_screen.dart';
 import 'package:my_story_app/screen/register_screen.dart';
 import 'package:my_story_app/screen/welcome_screen.dart';

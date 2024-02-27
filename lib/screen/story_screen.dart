@@ -93,8 +93,8 @@ class MyStoryScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          onTap: () async {
-                            await picker.pickImage(source: ImageSource.gallery);
+                          onTap: () {
+                            context.push(cameraPath);
                           },
                           child: Container(
                             width: 56.0,

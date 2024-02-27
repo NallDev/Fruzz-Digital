@@ -45,6 +45,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   go_router: ^13.2.0
   flutter_svg: ^2.0.9
+  camera: ^0.10.5+9
 
 dev_dependencies:
   flutter_test:

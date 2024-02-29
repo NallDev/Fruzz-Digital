@@ -27,28 +27,33 @@ class MyCameraScreen extends StatelessWidget {
 
             return Column(
               children: <Widget>[
-                Stack(
-                  children: [
-                    cameraProvider.controller == null || !cameraProvider.controller!.value.isInitialized
-                        ? const Center(child: Text('Loading Camera...'))
-                        : CameraPreview(cameraProvider.controller!),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  width: double.infinity,
+                  color: Colors.black87,
+                  child: Stack(
+                    children: [
+                      cameraProvider.controller == null || !cameraProvider.controller!.value.isInitialized
+                          ? const Center(child: Text('Loading Camera...'))
+                          : CameraPreview(cameraProvider.controller!),
 
-                    SafeArea(
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 16.0, top: 16.0),
-                        decoration: BoxDecoration(
-                            border:
-                            Border.all(color: const Color(borderColor), width: 1),
-                            borderRadius: BorderRadius.circular(8.0)),
-                        child: IconButton(
-                          icon: const Icon(Icons.arrow_back_ios_new, color: Color(borderColor),),
-                          onPressed: () {
-                            context.pop();
-                          },
+                      SafeArea(
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 16.0, top: 16.0),
+                          decoration: BoxDecoration(
+                              border:
+                              Border.all(color: const Color(borderColor), width: 1),
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: IconButton(
+                            icon: const Icon(Icons.arrow_back_ios_new, color: Color(borderColor),),
+                            onPressed: () {
+                              context.pop();
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
 
                 Expanded(

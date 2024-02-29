@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:my_story_app/data/local/preferences_helper.dart';
 import 'package:my_story_app/provider/stories_provider.dart';
 import 'package:my_story_app/theme/text_style.dart';
 import 'package:my_story_app/util/constant.dart';
 import 'package:my_story_app/util/ui_helper.dart';
-import 'package:my_story_app/util/ui_state.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -14,26 +12,12 @@ import '../widget/circle_story.dart';
 import '../widget/main_story.dart';
 
 class MyStoryScreen extends StatelessWidget {
-  MyStoryScreen({super.key});
-  final RefreshController refreshController =
-  RefreshController(initialRefresh: true);
+  const MyStoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-    final storiesState = context.watch<StoriesProvider>().storiesState;
     final randomStories = context.watch<StoriesProvider>().randomStory;
     final mainStories = context.watch<StoriesProvider>().listStory;
-    final ImagePicker picker = ImagePicker();
-
-    if (storiesState is Error) {
-      refreshController.refreshCompleted();
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showToast(context, storiesState.message);
-      });
-    } else if (storiesState is Success) {
-      refreshController.refreshCompleted();
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -71,7 +55,7 @@ class MyStoryScreen extends StatelessWidget {
         ],
       ),
       body: SmartRefresher(
-        controller: refreshController,
+        controller: context.read<StoriesProvider>().refreshController,
         enablePullDown: true,
         header: const ClassicHeader(),
         onRefresh: () {

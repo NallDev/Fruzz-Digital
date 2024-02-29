@@ -25,15 +25,16 @@ class StoriesProvider extends ChangeNotifier {
       var session = await PreferencesHelper().getSession();
       final stories = await apiService.getStories(session!.token);
 
-      _listStory = List.from(stories)..sort((a, b) => a.createdAt.compareTo(b.createdAt));
+      _listStory = List.from(stories)..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
       _randomStory = List.from(stories)..shuffle();
       _randomStory = _randomStory.take(5).toList();
 
       _storiesState = Success(stories);
+      notifyListeners();
     } catch (exception) {
-      _storiesState = Error(exception.toString().replaceAll("Exception: ", textEmpty));
-    } finally {
+      _storiesState =
+          Error(exception.toString().replaceAll("Exception: ", textEmpty));
       notifyListeners();
     }
   }

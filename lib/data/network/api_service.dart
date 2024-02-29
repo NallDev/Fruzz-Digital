@@ -86,4 +86,38 @@ class ApiService {
       throw Exception(e.toString());
     }
   }
+
+  Future<bool> postStory(File imageFile, String description, String token) async {
+    var headers = {
+      "Content-type": "multipart/form-data",
+      'Authorization': 'Bearer $token',
+    };
+
+    var request = http.MultipartRequest('POST', Uri.parse("$_baseUrl/stories"))
+      ..headers.addAll(headers)
+      ..fields['description'] = description;
+
+    try {
+      request.files.add(await http.MultipartFile.fromPath('photo', imageFile.path));
+
+      var response = await request.send();
+      var responseData = await response.stream.toBytes();
+      var responseString = String.fromCharCodes(responseData);
+      var jsonResponse = json.decode(responseString);
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        if (jsonResponse['error'] == false) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        throw Exception(jsonResponse['message'].toString());
+      }
+    } on SocketException catch (_) {
+      throw Exception(noConnectionMsg);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
 }

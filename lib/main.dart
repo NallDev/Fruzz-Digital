@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_story_app/data/network/api_service.dart';
+import 'package:my_story_app/provider/post_story_provider.dart';
 import 'package:my_story_app/provider/stories_provider.dart';
 import 'package:my_story_app/routing/app_route.dart';
 import 'package:my_story_app/theme/color_schemes.dart';
@@ -14,10 +15,19 @@ void main() async {
 
   bool hasSession = await checkSession();
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => StoriesProvider(
-        apiService: ApiService(),
-      ),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => StoriesProvider(
+            apiService: ApiService(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => PostStoryProvider(
+            apiService: ApiService(),
+          ),
+        ),
+      ],
       child: MyApp(
         hasSession: hasSession,
       ),

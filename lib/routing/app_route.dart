@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:go_router/go_router.dart';
 import 'package:my_story_app/screen/camera_screen.dart';
 import 'package:my_story_app/screen/login_screen.dart';
+import 'package:my_story_app/screen/post_story_screen.dart';
 import 'package:my_story_app/screen/register_screen.dart';
 import 'package:my_story_app/screen/welcome_screen.dart';
 import 'package:my_story_app/util/constant.dart';
@@ -33,6 +36,8 @@ GoRouter createAppRouter(bool hasSession) {
         path: cameraPath,
         builder: (context, state) => MyCameraScreen(),
       ),
+      GoRoute(path: postStoryPath,
+      builder: (context, state) => MyPostStoryScreen(imagePath: state.extra as File),)
     ],
   );
 }

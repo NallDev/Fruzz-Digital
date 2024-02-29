@@ -5,8 +5,8 @@ import 'package:camera/camera.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_story_app/provider/camera_provider.dart';
-import 'package:my_story_app/screen/post_story_screen.dart';
 import 'package:my_story_app/theme/color_schemes.dart';
+import 'package:my_story_app/util/constant.dart';
 import 'package:provider/provider.dart';
 
 class MyCameraScreen extends StatelessWidget {
@@ -68,13 +68,8 @@ class MyCameraScreen extends StatelessWidget {
 
                             if (file == null) return;
                             if (!context.mounted) return;
-
-                            await Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => MyPostStoryScreen(imagePath: File(file.path)),
-                              ),
-                            );
+                            var imageFile = File(file.path);
+                            context.push(postStoryPath, extra: imageFile);
                           },
                         ),
                       ),
@@ -91,12 +86,8 @@ class MyCameraScreen extends StatelessWidget {
                             var file = await Provider.of<CameraProvider>(context, listen: false).takePicture();
                             if (file != null) {
                               if(!context.mounted) return;
-                              await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MyPostStoryScreen(imagePath: File(file.path)),
-                                ),
-                              );
+                              var imageFile = File(file.path);
+                              context.push(postStoryPath, extra: imageFile);
                             }
                           },
                         ),

@@ -15,24 +15,24 @@ import '../widget/main_story.dart';
 
 class MyStoryScreen extends StatelessWidget {
   MyStoryScreen({super.key});
-
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
+  final RefreshController refreshController =
+  RefreshController(initialRefresh: true);
 
   @override
   Widget build(BuildContext context) {
+
     final storiesState = context.watch<StoriesProvider>().storiesState;
     final randomStories = context.watch<StoriesProvider>().randomStory;
     final mainStories = context.watch<StoriesProvider>().listStory;
     final ImagePicker picker = ImagePicker();
 
     if (storiesState is Error) {
-      _refreshController.refreshCompleted();
+      refreshController.refreshCompleted();
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showToast(context, storiesState.message);
       });
     } else if (storiesState is Success) {
-      _refreshController.refreshCompleted();
+      refreshController.refreshCompleted();
     }
 
     return Scaffold(
@@ -71,7 +71,7 @@ class MyStoryScreen extends StatelessWidget {
         ],
       ),
       body: SmartRefresher(
-        controller: _refreshController,
+        controller: refreshController,
         enablePullDown: true,
         header: const ClassicHeader(),
         onRefresh: () {

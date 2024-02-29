@@ -40,3 +40,4 @@ const String registerPath = '/register';
 const String loginPath = '/login';
 const String storyPath = '/story';
 const String cameraPath = '/camera';
+const String postStoryPath = '/post';

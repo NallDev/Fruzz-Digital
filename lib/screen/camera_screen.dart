@@ -25,98 +25,102 @@ class MyCameraScreen extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
 
-            return Column(
-              children: <Widget>[
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.8,
-                  width: double.infinity,
-                  color: Colors.black87,
-                  child: Stack(
-                    children: [
-                      cameraProvider.controller == null || !cameraProvider.controller!.value.isInitialized
-                          ? const Center(child: Text('Loading Camera...'))
-                          : CameraPreview(cameraProvider.controller!),
-
-                      SafeArea(
-                        child: Container(
-                          margin: const EdgeInsets.only(left: 16.0, top: 16.0),
-                          decoration: BoxDecoration(
-                              border:
-                              Border.all(color: const Color(borderColor), width: 1),
-                              borderRadius: BorderRadius.circular(8.0)),
-                          child: IconButton(
-                            icon: const Icon(Icons.arrow_back_ios_new, color: Color(borderColor),),
-                            onPressed: () {
-                              context.pop();
-                            },
+            return SingleChildScrollView(
+              child: IntrinsicHeight(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      width: double.infinity,
+                      color: Colors.black87,
+                      child: Stack(
+                        children: [
+                          cameraProvider.controller == null || !cameraProvider.controller!.value.isInitialized
+                              ? const Center(child: Text('Loading Camera...'))
+                              : CameraPreview(cameraProvider.controller!),
+                
+                          SafeArea(
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 16.0, top: 16.0),
+                              decoration: BoxDecoration(
+                                  border:
+                                  Border.all(color: const Color(borderColor), width: 1),
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              child: IconButton(
+                                icon: const Icon(Icons.arrow_back_ios_new, color: Color(borderColor),),
+                                onPressed: () {
+                                  context.pop();
+                                },
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            decoration: BoxDecoration(
+                                border:
+                                Border.all(color: const Color(borderColor), width: 1),
+                                borderRadius: BorderRadius.circular(8.0)),
+                            child: IconButton(
+                              icon: const Icon(Icons.image_outlined, color: Color(primaryColor),),
+                              onPressed: () async {
+                                var file = await _picker.pickImage(source: ImageSource.gallery);
+                
+                                if (file == null) return;
+                                if (!context.mounted) return;
+                                var imageFile = File(file.path);
+                                context.read<CameraProvider>().disposeCameraController();
+                                context.push(postStoryPath, extra: imageFile).then((_) {
+                                  context.read<CameraProvider>().reinitializeCamera();
+                                });
+                              },
+                            ),
+                          ),
+                          Container(
+                            width: 80,
+                            height: 80,
+                            decoration: BoxDecoration(
+                                border:
+                                Border.all(color: const Color(borderColor), width: 1),
+                                borderRadius: BorderRadius.circular(100.0)),
+                            child: IconButton(
+                              icon: const Icon(Icons.circle, color: Color(primaryColor),),
+                              onPressed: () async {
+                                var file = await Provider.of<CameraProvider>(context, listen: false).takePicture();
+                                if (file != null) {
+                                  if(!context.mounted) return;
+                                  var imageFile = File(file.path);
+                                  context.push(postStoryPath, extra: imageFile);
+                                }
+                              },
+                            ),
+                          ),
+                          if (cameraProvider.cameras != null && cameraProvider.cameras!.length > 1)
+                            Container(
+                              decoration: BoxDecoration(
+                                  border:
+                                  Border.all(color: const Color(borderColor), width: 1),
+                                  borderRadius: BorderRadius.circular(8.0)),
+                              child: IconButton(
+                                icon: const Icon(Icons.switch_camera_outlined, color: Color(primaryColor),),
+                                onPressed: () {
+                                  Provider.of<CameraProvider>(context, listen: false).switchCamera();
+                                },
+                              ),
+                            ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                            border:
-                            Border.all(color: const Color(borderColor), width: 1),
-                            borderRadius: BorderRadius.circular(8.0)),
-                        child: IconButton(
-                          icon: const Icon(Icons.image_outlined, color: Color(primaryColor),),
-                          onPressed: () async {
-                            var file = await _picker.pickImage(source: ImageSource.gallery);
-
-                            if (file == null) return;
-                            if (!context.mounted) return;
-                            var imageFile = File(file.path);
-                            context.read<CameraProvider>().disposeCameraController();
-                            context.push(postStoryPath, extra: imageFile).then((_) {
-                              context.read<CameraProvider>().reinitializeCamera();
-                            });
-                          },
-                        ),
-                      ),
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                            border:
-                            Border.all(color: const Color(borderColor), width: 1),
-                            borderRadius: BorderRadius.circular(100.0)),
-                        child: IconButton(
-                          icon: const Icon(Icons.circle, color: Color(primaryColor),),
-                          onPressed: () async {
-                            var file = await Provider.of<CameraProvider>(context, listen: false).takePicture();
-                            if (file != null) {
-                              if(!context.mounted) return;
-                              var imageFile = File(file.path);
-                              context.push(postStoryPath, extra: imageFile);
-                            }
-                          },
-                        ),
-                      ),
-                      if (cameraProvider.cameras != null && cameraProvider.cameras!.length > 1)
-                        Container(
-                          decoration: BoxDecoration(
-                              border:
-                              Border.all(color: const Color(borderColor), width: 1),
-                              borderRadius: BorderRadius.circular(8.0)),
-                          child: IconButton(
-                            icon: const Icon(Icons.switch_camera_outlined, color: Color(primaryColor),),
-                            onPressed: () {
-                              Provider.of<CameraProvider>(context, listen: false).switchCamera();
-                            },
-                          ),
-                        ),
-                    ],
-                  ),
-                )
-              ],
+              ),
             );
           },
         ),

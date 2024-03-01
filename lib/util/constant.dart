@@ -27,6 +27,8 @@ const String registerSuccess = "Register Success, You can login with that accoun
 const String noConnectionMsg = 'Please check your internet connection';
 const String addStory = 'Add Story';
 const String deleteSessionErrorMsg = "Error when deleting session";
+const String send = "Send";
+const String description = "Description";
 
 const String sessionKey = 'session';
 

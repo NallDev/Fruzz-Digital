@@ -22,11 +22,6 @@ void main() async {
             apiService: ApiService(),
           ),
         ),
-        ChangeNotifierProvider(
-          create: (context) => PostStoryProvider(
-            apiService: ApiService(),
-          ),
-        ),
       ],
       child: MyApp(
         hasSession: hasSession,

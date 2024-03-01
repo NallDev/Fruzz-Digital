@@ -105,6 +105,8 @@ class ApiService {
       var responseString = String.fromCharCodes(responseData);
       var jsonResponse = json.decode(responseString);
 
+      print("INI RESPONNYA : $jsonResponse");
+
       if (response.statusCode >= 200 && response.statusCode < 300) {
         if (jsonResponse['error'] == false) {
           return true;

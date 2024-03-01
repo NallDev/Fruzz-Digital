@@ -23,6 +23,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
 
   @override
   void initState() {
+    print('INIT STATE AGAIN?');
     super.initState();
     _refreshController = RefreshController(initialRefresh: true);
   }

@@ -89,11 +89,20 @@ class CameraProvider with ChangeNotifier {
     }
   }
 
+  Future<void> reinitializeCamera() async {
+    await _initCamera();
+  }
+
+  void disposeCameraController() {
+    _controller?.dispose();
+    _controller = null;
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     _controller?.dispose();
+    _controller = null;
     super.dispose();
   }
 }
-
-

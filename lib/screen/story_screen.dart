@@ -11,8 +11,35 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../widget/circle_story.dart';
 import '../widget/main_story.dart';
 
-class MyStoryScreen extends StatelessWidget {
+class MyStoryScreen extends StatefulWidget {
   const MyStoryScreen({super.key});
+
+  @override
+  State<MyStoryScreen> createState() => _MyStoryScreenState();
+}
+
+class _MyStoryScreenState extends State<MyStoryScreen> {
+  late RefreshController _refreshController;
+
+  @override
+  void initState() {
+    super.initState();
+    _refreshController = RefreshController(initialRefresh: true);
+  }
+
+  @override
+  void dispose() {
+    _refreshController.dispose();
+    super.dispose();
+  }
+
+  void _onRefresh() async {
+    try {
+      await context.read<StoriesProvider>().getStories();
+    } finally {
+      _refreshController.refreshCompleted();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +82,10 @@ class MyStoryScreen extends StatelessWidget {
         ],
       ),
       body: SmartRefresher(
-        controller: context.read<StoriesProvider>().refreshController,
+        controller: _refreshController,
         enablePullDown: true,
         header: const ClassicHeader(),
-        onRefresh: () {
-          context.read<StoriesProvider>().getStories();
-        },
+        onRefresh: _onRefresh,
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(

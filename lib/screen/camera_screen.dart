@@ -74,7 +74,10 @@ class MyCameraScreen extends StatelessWidget {
                             if (file == null) return;
                             if (!context.mounted) return;
                             var imageFile = File(file.path);
-                            context.push(postStoryPath, extra: imageFile);
+                            context.read<CameraProvider>().disposeCameraController();
+                            context.push(postStoryPath, extra: imageFile).then((_) {
+                              context.read<CameraProvider>().reinitializeCamera();
+                            });
                           },
                         ),
                       ),

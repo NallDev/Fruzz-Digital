@@ -15,14 +15,11 @@ class StoriesProvider extends ChangeNotifier {
 
   StoriesProvider({required this.apiService});
 
-  RefreshController refreshController =
-  RefreshController(initialRefresh: true);
-
   UiState get storiesState => _storiesState;
   List<ListStory> get listStory => _listStory;
   List<ListStory> get randomStory => _randomStory;
 
-  void getStories() async {
+  Future<void> getStories() async {
     _storiesState = const Loading();
     print("DO LOADING");
     notifyListeners();
@@ -34,22 +31,14 @@ class StoriesProvider extends ChangeNotifier {
 
       _randomStory = List.from(stories)..shuffle();
       _randomStory = _randomStory.take(5).toList();
-      refreshController.refreshCompleted();
       _storiesState = Success(stories);
       print("DO SUCCESS");
       notifyListeners();
     } catch (exception) {
       _storiesState =
           Error(exception.toString().replaceAll("Exception: ", textEmpty));
-      refreshController.refreshCompleted();
       print("DO ERROR");
       notifyListeners();
     }
-  }
-
-  @override
-  void dispose() {
-    refreshController.dispose();
-    super.dispose();
   }
 }

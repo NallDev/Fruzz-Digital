@@ -6,15 +6,27 @@ class MyButton extends StatelessWidget {
   final ButtonStyle style;
   final Function()? onPressed;
 
-  const MyButton._({Key? key, required this.text, required this.style, this.onPressed})
+  const MyButton._(
+      {Key? key, required this.text, required this.style, this.onPressed})
       : super(key: key);
 
-  static MyButton filled({Key? key, required String text, required Function() onPressed}) {
-    return MyButton._(key: key, text: text, style: ButtonStyle.filled, onPressed: onPressed,);
+  static MyButton filled(
+      {Key? key, required String text, required Function() onPressed}) {
+    return MyButton._(
+      key: key,
+      text: text,
+      style: ButtonStyle.filled,
+      onPressed: onPressed,
+    );
   }
 
-  static MyButton outlined({Key? key, required String text, required Function() onPressed}) {
-    return MyButton._(key: key, text: text, style: ButtonStyle.outlined, onPressed: onPressed);
+  static MyButton outlined(
+      {Key? key, required String text, required Function() onPressed}) {
+    return MyButton._(
+        key: key,
+        text: text,
+        style: ButtonStyle.outlined,
+        onPressed: onPressed);
   }
 
   static MyButton disabled({Key? key, required String text}) {

@@ -19,7 +19,8 @@ class RegisterProvider extends ChangeNotifier {
       final register = await apiService.doRegister(name, email, password);
       _registerState = Success(register);
     } catch (exception) {
-      _registerState = Error(exception.toString().replaceAll("Exception: ", textEmpty));
+      _registerState =
+          Error(exception.toString().replaceAll("Exception: ", textEmpty));
     } finally {
       notifyListeners();
     }

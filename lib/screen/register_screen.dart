@@ -42,7 +42,8 @@ class MyRegisterScreen extends StatelessWidget {
                   context.pop();
                 }
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showToast(context, AppLocalizations.of(context)!.registerSuccess);
+                  showToast(
+                      context, AppLocalizations.of(context)!.registerSuccess);
                   context.go(loginPath);
                 });
               } else if (registerState is Error) {
@@ -64,14 +65,12 @@ class MyRegisterScreen extends StatelessWidget {
                 });
               }
 
-
               return Column(
                 children: [
                   Expanded(
                     child: SingleChildScrollView(
                       child: Container(
-                        padding:
-                        const EdgeInsets.symmetric(horizontal: 16.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -81,8 +80,9 @@ class MyRegisterScreen extends StatelessWidget {
                             if (GoRouter.of(context).canPop()) ...[
                               Container(
                                 decoration: BoxDecoration(
-                                    border:
-                                    Border.all(color: const Color(borderColor), width: 1),
+                                    border: Border.all(
+                                        color: const Color(borderColor),
+                                        width: 1),
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(8.0)),
                                 child: IconButton(
@@ -131,7 +131,8 @@ class MyRegisterScreen extends StatelessWidget {
                               builder: (context, formProvider, child) {
                                 return MyTextInput.password(
                                     field: passwordRegister,
-                                    hint: AppLocalizations.of(context)!.password,
+                                    hint:
+                                        AppLocalizations.of(context)!.password,
                                     isShowIcon: true,
                                     formProvider: formProvider,
                                     useLengthValidator: true);
@@ -141,31 +142,31 @@ class MyRegisterScreen extends StatelessWidget {
                             Consumer<FormProvider>(
                               builder: (context, formProvider, child) {
                                 if (formProvider.isValid(emailRegister) ==
-                                    true &&
-                                    formProvider
-                                        .isValid(passwordRegister) ==
                                         true &&
-                                    formProvider
-                                        .isValid(usernameRegister) ==
+                                    formProvider.isValid(passwordRegister) ==
+                                        true &&
+                                    formProvider.isValid(usernameRegister) ==
                                         true) {
                                   return MyButton.filled(
-                                    text: AppLocalizations.of(context)!.register,
+                                    text:
+                                        AppLocalizations.of(context)!.register,
                                     onPressed: () {
                                       context
                                           .read<RegisterProvider>()
                                           .doRegister(
-                                        formProvider
-                                            .getValue(usernameRegister),
-                                        formProvider
-                                            .getValue(emailRegister),
-                                        formProvider
-                                            .getValue(passwordRegister),
-                                      );
+                                            formProvider
+                                                .getValue(usernameRegister),
+                                            formProvider
+                                                .getValue(emailRegister),
+                                            formProvider
+                                                .getValue(passwordRegister),
+                                          );
                                     },
                                   );
                                 } else {
                                   return MyButton.disabled(
-                                    text: AppLocalizations.of(context)!.register,
+                                    text:
+                                        AppLocalizations.of(context)!.register,
                                   );
                                 }
                               },

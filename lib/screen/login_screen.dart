@@ -41,7 +41,8 @@ class MyLoginScreen extends StatelessWidget {
                   context.pop();
                 }
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showToast(context, AppLocalizations.of(context)!.loginSuccess);
+                  showToast(
+                      context, AppLocalizations.of(context)!.loginSuccess);
                   Future.delayed(const Duration(seconds: 2), () {
                     context.go(storyPath);
                   });
@@ -87,9 +88,10 @@ class MyLoginScreen extends StatelessWidget {
                                             width: 1),
                                         color: Colors.white,
                                         borderRadius:
-                                        BorderRadius.circular(8.0)),
+                                            BorderRadius.circular(8.0)),
                                     child: IconButton(
-                                      icon: const Icon(Icons.arrow_back_ios_new),
+                                      icon:
+                                          const Icon(Icons.arrow_back_ios_new),
                                       onPressed: () {
                                         context.pop();
                                       },
@@ -101,8 +103,7 @@ class MyLoginScreen extends StatelessWidget {
                                 ),
                                 Text(
                                   AppLocalizations.of(context)!.loginGreeting,
-                                  style: myTextTheme.headlineLarge
-                                      ?.copyWith(
+                                  style: myTextTheme.headlineLarge?.copyWith(
                                       color: const Color(darkColor),
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -129,9 +130,10 @@ class MyLoginScreen extends StatelessWidget {
                                     text: AppLocalizations.of(context)!.login,
                                     onPressed: () {
                                       context.read<LoginProvider>().doLogin(
-                                        formProvider.getValue(emailLogin),
-                                        formProvider.getValue(passwordLogin),
-                                      );
+                                            formProvider.getValue(emailLogin),
+                                            formProvider
+                                                .getValue(passwordLogin),
+                                          );
                                     },
                                   ),
                                 ] else ...[

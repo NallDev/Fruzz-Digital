@@ -66,11 +66,14 @@ class ApiService {
   }
 
   Future<List<ListStory>> getStories(String token) async {
-    var headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer $token'};
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
 
     try {
-      final response = await http.get(Uri.parse("$_baseUrl/stories"),
-          headers: headers);
+      final response =
+          await http.get(Uri.parse("$_baseUrl/stories"), headers: headers);
 
       final stringJson = json.decode(response.body);
       var storiesResponse = StoriesResponse.fromJson(stringJson);
@@ -87,7 +90,8 @@ class ApiService {
     }
   }
 
-  Future<bool> postStory(File imageFile, String description, String token) async {
+  Future<bool> postStory(
+      File imageFile, String description, String token) async {
     var headers = {
       "Content-type": "multipart/form-data",
       'Authorization': 'Bearer $token',
@@ -98,7 +102,8 @@ class ApiService {
       ..fields['description'] = description;
 
     try {
-      request.files.add(await http.MultipartFile.fromPath('photo', imageFile.path));
+      request.files
+          .add(await http.MultipartFile.fromPath('photo', imageFile.path));
 
       var response = await request.send();
       var responseData = await response.stream.toBytes();

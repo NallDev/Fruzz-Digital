@@ -6,10 +6,12 @@ import 'package:path/path.dart' as p;
 
 Future<XFile?> imageCompressing(File file) async {
   final directory = await getTemporaryDirectory();
-  String targetPath = p.join(directory.path, "${DateTime.now().microsecond}.jpg");
+  String targetPath =
+      p.join(directory.path, "${DateTime.now().microsecond}.jpg");
 
   var result = await FlutterImageCompress.compressAndGetFile(
-    file.absolute.path, targetPath,
+    file.absolute.path,
+    targetPath,
     quality: 88,
   );
 

@@ -1,13 +1,10 @@
-
 import 'package:animated_dashed_circle/animated_dashed_circle.dart';
 import 'package:flutter/material.dart';
 
 class CircleStory extends StatelessWidget {
   final String image;
   final String name;
-  const CircleStory({
-    super.key, required this.image, required this.name
-  });
+  const CircleStory({super.key, required this.image, required this.name});
 
   @override
   Widget build(BuildContext context) {

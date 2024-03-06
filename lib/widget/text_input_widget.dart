@@ -27,15 +27,21 @@ class MyTextInput extends StatefulWidget {
     required this.field,
   }) : super(key: key);
 
-  static MyTextInput basic({
-    Key? key,
-    required String hint,
-    FormProvider? formProvider,
-    bool? useEmailValidator = false,
-    bool? useTextEmptyValidator = false,
-    required String field
-  }) {
-    return MyTextInput._(key: key, hint: hint, formProvider: formProvider, useEmailValidator: useEmailValidator, field: field, useTextEmptyValidator: useTextEmptyValidator,);
+  static MyTextInput basic(
+      {Key? key,
+      required String hint,
+      FormProvider? formProvider,
+      bool? useEmailValidator = false,
+      bool? useTextEmptyValidator = false,
+      required String field}) {
+    return MyTextInput._(
+      key: key,
+      hint: hint,
+      formProvider: formProvider,
+      useEmailValidator: useEmailValidator,
+      field: field,
+      useTextEmptyValidator: useTextEmptyValidator,
+    );
   }
 
   static MyTextInput password({
@@ -49,12 +55,20 @@ class MyTextInput extends StatefulWidget {
   }) {
     Widget? icon = isShowIcon
         ? SvgPicture.asset(
-      assetEyeFilled,
-      fit: BoxFit.scaleDown,
-    )
+            assetEyeFilled,
+            fit: BoxFit.scaleDown,
+          )
         : null;
     return MyTextInput._(
-        key: key, hint: hint, obscureText: true, suffixIcon: icon, formProvider: formProvider, useLengthValidator: useLengthValidator, field: field, useTextEmptyValidator: useTextEmptyValidator,);
+      key: key,
+      hint: hint,
+      obscureText: true,
+      suffixIcon: icon,
+      formProvider: formProvider,
+      useLengthValidator: useLengthValidator,
+      field: field,
+      useTextEmptyValidator: useTextEmptyValidator,
+    );
   }
 
   @override
@@ -76,7 +90,8 @@ class MyTextInputState extends State<MyTextInput> {
       if (widget.useEmailValidator == true) {
         widget.formProvider?.validateEmail(widget.field, _controller.text);
       } else if (widget.useLengthValidator == true) {
-        widget.formProvider?.validateMinEightChar(widget.field, _controller.text);
+        widget.formProvider
+            ?.validateMinEightChar(widget.field, _controller.text);
       } else if (widget.useTextEmptyValidator == true) {
         widget.formProvider?.validateEmpty(widget.field, _controller.text);
       }
@@ -100,23 +115,25 @@ class MyTextInputState extends State<MyTextInput> {
     return TextField(
       controller: _controller,
       obscureText: _obscureText,
-      style: const TextStyle(color: Color(darkColor), fontWeight: FontWeight.w600),
+      style:
+          const TextStyle(color: Color(darkColor), fontWeight: FontWeight.w600),
       decoration: InputDecoration(
         suffixIcon: widget.suffixIcon != null
             ? GestureDetector(
-          onLongPressUp: () {
-            _toggleVisibility();
-          },
-          onLongPressDown: (details) {
-            _toggleVisibility();
-          },
-          child: widget.suffixIcon,
-        )
+                onLongPressUp: () {
+                  _toggleVisibility();
+                },
+                onLongPressDown: (details) {
+                  _toggleVisibility();
+                },
+                child: widget.suffixIcon,
+              )
             : null,
         filled: true,
         fillColor: const Color(backgroundColor),
         hintText: widget.hint,
-        hintStyle: const TextStyle(color: Color(grayColor), fontWeight: FontWeight.w400),
+        hintStyle: const TextStyle(
+            color: Color(grayColor), fontWeight: FontWeight.w400),
         errorText: widget.formProvider?.getErrorText(widget.field),
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),

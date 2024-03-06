@@ -16,7 +16,6 @@ GoRouter createAppRouter(bool hasSession) {
   return GoRouter(
     initialLocation: hasSession ? storyPath : welcomePath,
     debugLogDiagnostics: true,
-    
     routes: [
       GoRoute(
         path: welcomePath,
@@ -38,10 +37,16 @@ GoRouter createAppRouter(bool hasSession) {
         path: cameraPath,
         builder: (context, state) => MyCameraScreen(),
       ),
-      GoRoute(path: postStoryPath,
-      builder: (context, state) => MyPostStoryScreen(imagePath: state.extra as File),),
-      GoRoute(path: detailStoryPath,
-      builder: (context, state) => MyDetailScreen(listStory: state.extra as ListStory),)
+      GoRoute(
+        path: postStoryPath,
+        builder: (context, state) =>
+            MyPostStoryScreen(imagePath: state.extra as File),
+      ),
+      GoRoute(
+        path: detailStoryPath,
+        builder: (context, state) =>
+            MyDetailScreen(listStory: state.extra as ListStory),
+      )
     ],
   );
 }

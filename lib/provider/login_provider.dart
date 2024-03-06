@@ -23,7 +23,8 @@ class LoginProvider extends ChangeNotifier {
       await PreferencesHelper().setSession(loginResult);
       getSession();
     } catch (exception) {
-      _loginState = Error(exception.toString().replaceAll("Exception: ", textEmpty));
+      _loginState =
+          Error(exception.toString().replaceAll("Exception: ", textEmpty));
     } finally {
       notifyListeners();
     }

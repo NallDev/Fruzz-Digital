@@ -13,7 +13,9 @@ class LoginResponse {
     return LoginResponse(
       error: json["error"],
       message: json["message"],
-      loginResult: json["loginResult"] != null ? LoginResult.fromJson(json["loginResult"]) : null,
+      loginResult: json["loginResult"] != null
+          ? LoginResult.fromJson(json["loginResult"])
+          : null,
     );
   }
 }
@@ -30,14 +32,14 @@ class LoginResult {
   });
 
   factory LoginResult.fromJson(Map<String, dynamic> json) => LoginResult(
-    userId: json["userId"],
-    name: json["name"],
-    token: json["token"],
-  );
+        userId: json["userId"],
+        name: json["name"],
+        token: json["token"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "userId": userId,
-    "name": name,
-    "token": token,
-  };
+        "userId": userId,
+        "name": name,
+        "token": token,
+      };
 }

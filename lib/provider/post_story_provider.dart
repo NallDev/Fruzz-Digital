@@ -22,13 +22,15 @@ class PostStoryProvider extends ChangeNotifier {
     notifyListeners();
     var image = await imageCompressing(imageFile);
     try {
-      if (image == null) throw("Failed to compress");
+      if (image == null) throw ("Failed to compress");
       var session = await PreferencesHelper().getSession();
-      var postStory = apiService.postStory(File(image.path), description, session!.token);
+      var postStory =
+          apiService.postStory(File(image.path), description, session!.token);
 
       _postStoryState = Success(postStory);
     } catch (exception) {
-      _postStoryState = Error(exception.toString().replaceAll("Exception: ", textEmpty));
+      _postStoryState =
+          Error(exception.toString().replaceAll("Exception: ", textEmpty));
     } finally {
       notifyListeners();
     }

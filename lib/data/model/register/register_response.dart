@@ -7,8 +7,9 @@ class RegisterResponse {
     required this.message,
   });
 
-  factory RegisterResponse.fromJson(Map<String, dynamic> json) => RegisterResponse(
-    error: json["error"],
-    message: json["message"],
-  );
+  factory RegisterResponse.fromJson(Map<String, dynamic> json) =>
+      RegisterResponse(
+        error: json["error"],
+        message: json["message"],
+      );
 }

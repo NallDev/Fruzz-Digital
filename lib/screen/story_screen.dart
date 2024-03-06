@@ -48,7 +48,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
     final mainStories = context.watch<StoriesProvider>().listStory;
     final needUpdate = context.watch<StoriesProvider>().needUpdate;
 
-    if(needUpdate) {
+    if (needUpdate) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _refreshController.requestRefresh();
         context.read<StoriesProvider>().resetUpdate();
@@ -82,7 +82,8 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                 context.go(loginPath);
               } catch (_) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showToast(context, AppLocalizations.of(context)!.deleteSessionErrorMsg);
+                  showToast(context,
+                      AppLocalizations.of(context)!.deleteSessionErrorMsg);
                 });
               }
             },
@@ -122,7 +123,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                             decoration: BoxDecoration(
                               color: Theme.of(context).colorScheme.primary,
                               borderRadius:
-                              const BorderRadius.all(Radius.circular(40.0)),
+                                  const BorderRadius.all(Radius.circular(40.0)),
                             ),
                             child: const Center(
                               child: Icon(Icons.add, color: Colors.white),
@@ -147,7 +148,8 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                       itemBuilder: (context, index) {
                         var story = randomStories[index];
                         return GestureDetector(
-                          onTap: () => context.push(detailStoryPath, extra: story),
+                          onTap: () =>
+                              context.push(detailStoryPath, extra: story),
                           child: CircleStory(
                             image: story.photoUrl,
                             name: story.name,
@@ -155,7 +157,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                         );
                       },
                       separatorBuilder: (context, index) =>
-                      const SizedBox(width: 16.0),
+                          const SizedBox(width: 16.0),
                       itemCount: randomStories.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),

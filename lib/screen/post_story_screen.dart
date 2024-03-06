@@ -72,20 +72,23 @@ class MyPostStoryScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.8,
+                        height: MediaQuery.of(context).size.height * 0.8,
                         width: double.infinity,
                         child: Stack(children: [
                           Container(
                             decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: FileImage(imagePath), fit: BoxFit.cover)),
+                                    image: FileImage(imagePath),
+                                    fit: BoxFit.cover)),
                           ),
                           SafeArea(
                             child: Container(
-                              margin: const EdgeInsets.only(left: 16.0, top: 16.0),
+                              margin:
+                                  const EdgeInsets.only(left: 16.0, top: 16.0),
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: const Color(borderColor), width: 1),
+                                      color: const Color(borderColor),
+                                      width: 1),
                                   borderRadius: BorderRadius.circular(8.0)),
                               child: IconButton(
                                 icon: const Icon(
@@ -109,7 +112,8 @@ class MyPostStoryScreen extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: MyTextInput.basic(
-                                      hint: AppLocalizations.of(context)!.description,
+                                      hint: AppLocalizations.of(context)!
+                                          .description,
                                       field: descriptionPost,
                                       formProvider: formProvider,
                                       useTextEmptyValidator: true),
@@ -119,21 +123,25 @@ class MyPostStoryScreen extends StatelessWidget {
                                 ),
                                 Expanded(
                                   flex: 1,
-                                  child: formProvider.isValid(descriptionPost) == true
+                                  child: formProvider
+                                              .isValid(descriptionPost) ==
+                                          true
                                       ? MyButton.filled(
-                                    text: AppLocalizations.of(context)!.send,
-                                    onPressed: () {
-                                      context
-                                          .read<PostStoryProvider>()
-                                          .postStory(
-                                          imagePath,
-                                          formProvider
-                                              .getValue(descriptionPost));
-                                    },
-                                  )
+                                          text: AppLocalizations.of(context)!
+                                              .send,
+                                          onPressed: () {
+                                            context
+                                                .read<PostStoryProvider>()
+                                                .postStory(
+                                                    imagePath,
+                                                    formProvider.getValue(
+                                                        descriptionPost));
+                                          },
+                                        )
                                       : MyButton.disabled(
-                                    text: AppLocalizations.of(context)!.send,
-                                  ),
+                                          text: AppLocalizations.of(context)!
+                                              .send,
+                                        ),
                                 ),
                               ],
                             );

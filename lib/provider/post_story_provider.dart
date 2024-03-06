@@ -18,9 +18,9 @@ class PostStoryProvider extends ChangeNotifier {
   UiState get postStoryState => _postStoryState;
 
   void postStory(File imageFile, String description) async {
-    var image = await imageCompressing(imageFile);
     _postStoryState = const Loading();
     notifyListeners();
+    var image = await imageCompressing(imageFile);
     try {
       if (image == null) throw("Failed to compress");
       var session = await PreferencesHelper().getSession();

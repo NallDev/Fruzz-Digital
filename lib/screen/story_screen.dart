@@ -46,6 +46,14 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
   Widget build(BuildContext context) {
     final randomStories = context.watch<StoriesProvider>().randomStory;
     final mainStories = context.watch<StoriesProvider>().listStory;
+    final needUpdate = context.watch<StoriesProvider>().needUpdate;
+
+    if(needUpdate) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _refreshController.requestRefresh();
+        context.read<StoriesProvider>().resetUpdate();
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -104,7 +112,9 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            context.push(cameraPath);
+                            context.push(cameraPath).then((_) {
+                              _refreshController.requestRefresh();
+                            });
                           },
                           child: Container(
                             width: 56.0,

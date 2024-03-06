@@ -12,6 +12,7 @@ import 'package:my_story_app/widget/text_input_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/form_provider.dart';
+import '../provider/stories_provider.dart';
 import '../util/ui_helper.dart';
 import '../widget/loading_widget.dart';
 
@@ -52,6 +53,7 @@ class MyPostStoryScreen extends StatelessWidget {
               context.pop();
             }
             WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.read<StoriesProvider>().updateStory();
               context.go(storyPath);
             });
           } else if (state is Error) {

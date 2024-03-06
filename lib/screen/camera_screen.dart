@@ -57,11 +57,12 @@ class MyCameraScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                
+
+                    const SizedBox(height: 32.0,),
+
                     Expanded(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Container(
                             decoration: BoxDecoration(
@@ -72,7 +73,7 @@ class MyCameraScreen extends StatelessWidget {
                               icon: const Icon(Icons.image_outlined, color: Color(primaryColor),),
                               onPressed: () async {
                                 var file = await _picker.pickImage(source: ImageSource.gallery);
-                
+
                                 if (file == null) return;
                                 if (!context.mounted) return;
                                 var imageFile = File(file.path);

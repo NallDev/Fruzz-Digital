@@ -12,12 +12,14 @@ class StoriesProvider extends ChangeNotifier {
   UiState _storiesState = const Idle();
   List<ListStory> _listStory = [];
   List<ListStory> _randomStory = [];
+  bool _needUpdate = false;
 
   StoriesProvider({required this.apiService});
 
   UiState get storiesState => _storiesState;
   List<ListStory> get listStory => _listStory;
   List<ListStory> get randomStory => _randomStory;
+  bool get needUpdate => _needUpdate;
 
   Future<void> getStories() async {
     _storiesState = const Loading();
@@ -40,5 +42,15 @@ class StoriesProvider extends ChangeNotifier {
       print("DO ERROR");
       notifyListeners();
     }
+  }
+
+  void updateStory() {
+    _needUpdate = true;
+    notifyListeners();
+  }
+
+  void resetUpdate() {
+    _needUpdate = false;
+    notifyListeners();
   }
 }

@@ -17,18 +17,18 @@ class MainStory extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 16.0,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Row(
             children: [
               Container(
                 height: 32,
                 width: 32,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(32),
                   ),
                   image: DecorationImage(
@@ -36,7 +36,7 @@ class MainStory extends StatelessWidget {
                       fit: BoxFit.cover),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8.0,
               ),
               Expanded(
@@ -53,7 +53,7 @@ class MainStory extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 4.0,
         ),
         Image.network(
@@ -62,11 +62,11 @@ class MainStory extends StatelessWidget {
           width: double.infinity,
           height: 200,
         ),
-        SizedBox(
+        const SizedBox(
           height: 4.0,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: RichText(
             text: TextSpan(
                 text: name,
@@ -74,7 +74,7 @@ class MainStory extends StatelessWidget {
                     color: Colors.black87,
                     fontWeight: FontWeight.w600),
                 children: [
-                  WidgetSpan(
+                  const WidgetSpan(
                     alignment: PlaceholderAlignment.baseline,
                     baseline: TextBaseline.alphabetic,
                     child: SizedBox(
@@ -87,7 +87,7 @@ class MainStory extends StatelessWidget {
                       color: Colors.grey[400],
                     ),
                   ),
-                  WidgetSpan(
+                  const WidgetSpan(
                     alignment: PlaceholderAlignment.baseline,
                     baseline: TextBaseline.alphabetic,
                     child: SizedBox(

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:my_story_app/data/network/api_service.dart';
 import 'package:my_story_app/provider/post_story_provider.dart';
 import 'package:my_story_app/theme/color_schemes.dart';
+import 'package:my_story_app/util/common.dart';
 import 'package:my_story_app/util/constant.dart';
 import 'package:my_story_app/util/ui_state.dart';
 import 'package:my_story_app/widget/button_widget.dart';
@@ -108,8 +109,8 @@ class MyPostStoryScreen extends StatelessWidget {
                                 Expanded(
                                   flex: 2,
                                   child: MyTextInput.basic(
-                                      hint: description,
-                                      field: description,
+                                      hint: AppLocalizations.of(context)!.description,
+                                      field: descriptionPost,
                                       formProvider: formProvider,
                                       useTextEmptyValidator: true),
                                 ),
@@ -118,20 +119,20 @@ class MyPostStoryScreen extends StatelessWidget {
                                 ),
                                 Expanded(
                                   flex: 1,
-                                  child: formProvider.isValid(description) == true
+                                  child: formProvider.isValid(descriptionPost) == true
                                       ? MyButton.filled(
-                                    text: send,
+                                    text: AppLocalizations.of(context)!.send,
                                     onPressed: () {
                                       context
                                           .read<PostStoryProvider>()
                                           .postStory(
                                           imagePath,
                                           formProvider
-                                              .getValue(description));
+                                              .getValue(descriptionPost));
                                     },
                                   )
                                       : MyButton.disabled(
-                                    text: send,
+                                    text: AppLocalizations.of(context)!.send,
                                   ),
                                 ),
                               ],

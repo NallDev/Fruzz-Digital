@@ -8,6 +8,7 @@ import 'package:my_story_app/util/ui_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../util/common.dart';
 import '../widget/circle_story.dart';
 import '../widget/main_story.dart';
 
@@ -23,7 +24,6 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
 
   @override
   void initState() {
-    print('INIT STATE AGAIN?');
     super.initState();
     _refreshController = RefreshController(initialRefresh: true);
   }
@@ -82,7 +82,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                 context.go(loginPath);
               } catch (_) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showToast(context, deleteSessionErrorMsg);
+                  showToast(context, AppLocalizations.of(context)!.deleteSessionErrorMsg);
                 });
               }
             },
@@ -131,7 +131,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                         ),
                         const SizedBox(height: 4.0),
                         Text(
-                          addStory,
+                          AppLocalizations.of(context)!.addStory,
                           style: Theme.of(context)
                               .textTheme
                               .labelSmall
@@ -146,9 +146,12 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
                         var story = randomStories[index];
-                        return CircleStory(
-                          image: story.photoUrl,
-                          name: story.name,
+                        return GestureDetector(
+                          onTap: () => context.push(detailStoryPath, extra: story),
+                          child: CircleStory(
+                            image: story.photoUrl,
+                            name: story.name,
+                          ),
                         );
                       },
                       separatorBuilder: (context, index) =>
@@ -168,10 +171,13 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   var story = mainStories[index];
-                  return MainStory(
-                    image: story.photoUrl,
-                    name: story.name,
-                    description: story.description,
+                  return GestureDetector(
+                    onTap: () => context.push(detailStoryPath, extra: story),
+                    child: MainStory(
+                      image: story.photoUrl,
+                      name: story.name,
+                      description: story.description,
+                    ),
                   );
                 },
                 separatorBuilder: (context, index) => const SizedBox(

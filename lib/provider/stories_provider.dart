@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_story_app/data/network/api_service.dart';
 import 'package:my_story_app/util/ui_state.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../data/local/preferences_helper.dart';
 import '../data/model/stories/stories_response.dart';
@@ -23,7 +22,6 @@ class StoriesProvider extends ChangeNotifier {
 
   Future<void> getStories() async {
     _storiesState = const Loading();
-    print("DO LOADING");
     notifyListeners();
     try {
       var session = await PreferencesHelper().getSession();
@@ -34,12 +32,10 @@ class StoriesProvider extends ChangeNotifier {
       _randomStory = List.from(stories)..shuffle();
       _randomStory = _randomStory.take(5).toList();
       _storiesState = Success(stories);
-      print("DO SUCCESS");
       notifyListeners();
     } catch (exception) {
       _storiesState =
           Error(exception.toString().replaceAll("Exception: ", textEmpty));
-      print("DO ERROR");
       notifyListeners();
     }
   }

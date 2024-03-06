@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_story_app/data/network/api_service.dart';
-import 'package:my_story_app/provider/post_story_provider.dart';
 import 'package:my_story_app/provider/stories_provider.dart';
 import 'package:my_story_app/routing/app_route.dart';
 import 'package:my_story_app/theme/color_schemes.dart';
 import 'package:my_story_app/theme/text_style.dart';
+import 'package:my_story_app/util/common.dart';
 import 'package:my_story_app/util/constant.dart';
 import 'package:my_story_app/util/ui_helper.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +47,8 @@ class MyApp extends StatelessWidget {
         colorScheme: lightColorScheme,
         textTheme: myTextTheme,
       ),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       routeInformationParser: routes.routeInformationParser,
       routerDelegate: routes.routerDelegate,
       routeInformationProvider: routes.routeInformationProvider,

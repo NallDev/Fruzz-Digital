@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:my_story_app/data/network/api_service.dart';
 import 'package:my_story_app/provider/form_provider.dart';
 import 'package:my_story_app/provider/login_provider.dart';
+import 'package:my_story_app/util/common.dart';
 import 'package:my_story_app/util/ui_helper.dart';
 import 'package:my_story_app/util/ui_state.dart';
 import 'package:my_story_app/widget/loading_widget.dart';
@@ -40,7 +41,7 @@ class MyLoginScreen extends StatelessWidget {
                   context.pop();
                 }
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showToast(context, loginSuccess);
+                  showToast(context, AppLocalizations.of(context)!.loginSuccess);
                   Future.delayed(const Duration(seconds: 2), () {
                     context.go(storyPath);
                   });
@@ -99,7 +100,7 @@ class MyLoginScreen extends StatelessWidget {
                                   height: 24.0,
                                 ),
                                 Text(
-                                  loginGreeting,
+                                  AppLocalizations.of(context)!.loginGreeting,
                                   style: myTextTheme.headlineLarge
                                       ?.copyWith(
                                       color: const Color(darkColor),
@@ -109,33 +110,33 @@ class MyLoginScreen extends StatelessWidget {
                                   height: 16.0,
                                 ),
                                 MyTextInput.basic(
-                                    field: email,
-                                    hint: email,
+                                    field: emailLogin,
+                                    hint: AppLocalizations.of(context)!.email,
                                     formProvider: formProvider,
                                     useTextEmptyValidator: true),
                                 const SizedBox(height: 8.0),
                                 MyTextInput.password(
-                                  field: password,
-                                  hint: password,
+                                  field: passwordLogin,
+                                  hint: AppLocalizations.of(context)!.password,
                                   formProvider: formProvider,
                                   useTextEmptyValidator: true,
                                 ),
                                 const SizedBox(height: 24.0),
-                                if (formProvider.isValid(email) == true &&
-                                    formProvider.isValid(password) ==
+                                if (formProvider.isValid(emailLogin) == true &&
+                                    formProvider.isValid(passwordLogin) ==
                                         true) ...[
                                   MyButton.filled(
-                                    text: login,
+                                    text: AppLocalizations.of(context)!.login,
                                     onPressed: () {
                                       context.read<LoginProvider>().doLogin(
-                                        formProvider.getValue(email),
-                                        formProvider.getValue(password),
+                                        formProvider.getValue(emailLogin),
+                                        formProvider.getValue(passwordLogin),
                                       );
                                     },
                                   ),
                                 ] else ...[
                                   MyButton.disabled(
-                                    text: login,
+                                    text: AppLocalizations.of(context)!.login,
                                   ),
                                 ]
                               ],
@@ -152,9 +153,9 @@ class MyLoginScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            dontHaveAnAccount,
-                            style: TextStyle(color: Color(0xFF1E232C)),
+                          Text(
+                            AppLocalizations.of(context)!.dontHaveAnAccount,
+                            style: const TextStyle(color: Color(0xFF1E232C)),
                           ),
                           const SizedBox(
                             width: 8.0,
@@ -167,9 +168,9 @@ class MyLoginScreen extends StatelessWidget {
                                 context.push(registerPath);
                               }
                             },
-                            child: const Text(
-                              registerNow,
-                              style: TextStyle(color: Color(0xFF35C2C1)),
+                            child: Text(
+                              AppLocalizations.of(context)!.registerNow,
+                              style: const TextStyle(color: Color(0xFF35C2C1)),
                             ),
                           )
                         ],

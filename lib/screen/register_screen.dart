@@ -4,6 +4,7 @@ import 'package:my_story_app/data/network/api_service.dart';
 import 'package:my_story_app/provider/register_provider.dart';
 import 'package:my_story_app/theme/color_schemes.dart';
 import 'package:my_story_app/theme/text_style.dart';
+import 'package:my_story_app/util/common.dart';
 import 'package:my_story_app/util/constant.dart';
 import 'package:my_story_app/util/ui_helper.dart';
 import 'package:my_story_app/util/ui_state.dart';
@@ -41,7 +42,7 @@ class MyRegisterScreen extends StatelessWidget {
                   context.pop();
                 }
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showToast(context, registerSuccess);
+                  showToast(context, AppLocalizations.of(context)!.registerSuccess);
                   context.go(loginPath);
                 });
               } else if (registerState is Error) {
@@ -96,7 +97,7 @@ class MyRegisterScreen extends StatelessWidget {
                               height: 24.0,
                             ),
                             Text(
-                              registerGreeting,
+                              AppLocalizations.of(context)!.registerGreeting,
                               style: myTextTheme.headlineLarge?.copyWith(
                                   color: const Color(darkColor),
                                   fontWeight: FontWeight.bold),
@@ -108,7 +109,7 @@ class MyRegisterScreen extends StatelessWidget {
                               builder: (context, formProvider, child) {
                                 return MyTextInput.basic(
                                   field: usernameRegister,
-                                  hint: username,
+                                  hint: AppLocalizations.of(context)!.username,
                                   formProvider: formProvider,
                                   useTextEmptyValidator: true,
                                 );
@@ -119,7 +120,7 @@ class MyRegisterScreen extends StatelessWidget {
                               builder: (context, formProvider, child) {
                                 return MyTextInput.basic(
                                   field: emailRegister,
-                                  hint: email,
+                                  hint: AppLocalizations.of(context)!.email,
                                   formProvider: formProvider,
                                   useEmailValidator: true,
                                 );
@@ -130,7 +131,7 @@ class MyRegisterScreen extends StatelessWidget {
                               builder: (context, formProvider, child) {
                                 return MyTextInput.password(
                                     field: passwordRegister,
-                                    hint: password,
+                                    hint: AppLocalizations.of(context)!.password,
                                     isShowIcon: true,
                                     formProvider: formProvider,
                                     useLengthValidator: true);
@@ -148,7 +149,7 @@ class MyRegisterScreen extends StatelessWidget {
                                         .isValid(usernameRegister) ==
                                         true) {
                                   return MyButton.filled(
-                                    text: register,
+                                    text: AppLocalizations.of(context)!.register,
                                     onPressed: () {
                                       context
                                           .read<RegisterProvider>()
@@ -164,7 +165,7 @@ class MyRegisterScreen extends StatelessWidget {
                                   );
                                 } else {
                                   return MyButton.disabled(
-                                    text: register,
+                                    text: AppLocalizations.of(context)!.register,
                                   );
                                 }
                               },
@@ -181,9 +182,9 @@ class MyRegisterScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(
-                            alreadyHaveAnAccount,
-                            style: TextStyle(color: Color(0xFF1E232C)),
+                          Text(
+                            AppLocalizations.of(context)!.alreadyHaveAnAccount,
+                            style: const TextStyle(color: Color(0xFF1E232C)),
                           ),
                           const SizedBox(
                             width: 8.0,
@@ -196,9 +197,9 @@ class MyRegisterScreen extends StatelessWidget {
                                 context.push(loginPath);
                               }
                             },
-                            child: const Text(
-                              login,
-                              style: TextStyle(color: Color(0xFF35C2C1)),
+                            child: Text(
+                              AppLocalizations.of(context)!.login,
+                              style: const TextStyle(color: Color(0xFF35C2C1)),
                             ),
                           )
                         ],

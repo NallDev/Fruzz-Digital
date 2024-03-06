@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:my_story_app/util/constant.dart';
 import 'package:my_story_app/widget/button_widget.dart';
 
+import '../util/common.dart';
+
 class MyWelcomeScreen extends StatelessWidget {
   const MyWelcomeScreen({super.key});
 
@@ -36,14 +38,14 @@ class MyWelcomeScreen extends StatelessWidget {
                     height: 32.0,
                   ),
                   MyButton.filled(
-                    text: login,
+                    text: AppLocalizations.of(context)!.login,
                     onPressed: () => context.go(loginPath),
                   ),
                   const SizedBox(
                     height: 16.0,
                   ),
                   MyButton.outlined(
-                    text: register,
+                    text: AppLocalizations.of(context)!.register,
                     onPressed: () => context.go(registerPath),
                   ),
                 ],

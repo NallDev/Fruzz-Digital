@@ -21,16 +21,26 @@ class MyStoryScreen extends StatefulWidget {
 
 class _MyStoryScreenState extends State<MyStoryScreen> {
   late RefreshController _refreshController;
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _refreshController = RefreshController(initialRefresh: true);
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent) {
+        if (context.read<StoriesProvider>().pageItems != null) {
+          context.read<StoriesProvider>().getStories();
+        }
+      }
+    });
   }
 
   @override
   void dispose() {
     _refreshController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -171,7 +181,17 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
               ListView.separated(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
+                controller: scrollController,
                 itemBuilder: (context, index) {
+                  if (index == mainStories.length && context.read<StoriesProvider>().pageItems != null) {
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(8),
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+
                   var story = mainStories[index];
                   return GestureDetector(
                     onTap: () => context.push(detailStoryPath, extra: story),
@@ -185,7 +205,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 16,
                 ),
-                itemCount: mainStories.length,
+                itemCount: mainStories.length + (context.read<StoriesProvider>().pageItems != null ? 1 : 0),
               ),
               const SizedBox(
                 height: 16.0,

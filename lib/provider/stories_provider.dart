@@ -20,19 +20,31 @@ class StoriesProvider extends ChangeNotifier {
   List<ListStory> get randomStory => _randomStory;
   bool get needUpdate => _needUpdate;
 
+  int? pageItems = 1;
+  int sizeItems = 10;
+
   Future<void> getStories() async {
-    _storiesState = const Loading();
-    notifyListeners();
+    if (pageItems == 1) {
+      _storiesState = const Loading();
+      notifyListeners();
+    }
     try {
       var session = await PreferencesHelper().getSession();
-      final stories = await apiService.getStories(session!.token);
+      final stories = await apiService.getStories(session!.token, pageItems!, sizeItems);
 
       _listStory = List.from(stories)
         ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
-      _randomStory = List.from(stories)..shuffle();
-      _randomStory = _randomStory.take(5).toList();
+      if (pageItems == 1) {
+        _randomStory = List.from(stories)..shuffle();
+        _randomStory = _randomStory.take(5).toList();
+      }
       _storiesState = Success(stories);
+      if (stories.length < sizeItems) {
+        pageItems = null;
+      } else {
+        pageItems = pageItems! + 1;
+      }
       notifyListeners();
     } catch (exception) {
       _storiesState =

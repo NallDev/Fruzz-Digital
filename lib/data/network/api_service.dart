@@ -65,15 +65,20 @@ class ApiService {
     }
   }
 
-  Future<List<ListStory>> getStories(String token) async {
+  Future<List<ListStory>> getStories(String token, int page, int size) async {
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'
     };
 
+    Map<String, dynamic> queryParams = {};
+    queryParams["page"] = page.toString();
+    queryParams["size"] = size.toString();
+    queryParams["location"] = "1";
+
     try {
       final response =
-          await http.get(Uri.parse("$_baseUrl/stories"), headers: headers);
+          await http.get(Uri.parse("$_baseUrl/stories").replace(queryParameters: queryParams), headers: headers);
 
       final stringJson = json.decode(response.body);
       var storiesResponse = StoriesResponse.fromJson(stringJson);

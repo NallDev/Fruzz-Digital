@@ -46,6 +46,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
 
   void _onRefresh() async {
     try {
+      context.read<StoriesProvider>().clearStory();
       await context.read<StoriesProvider>().getStories();
     } finally {
       _refreshController.refreshCompleted();
@@ -60,8 +61,9 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
 
     if (needUpdate) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        _refreshController.requestRefresh();
         context.read<StoriesProvider>().resetUpdate();
+        context.read<StoriesProvider>().clearStory();
+        _refreshController.requestRefresh();
       });
     }
 
@@ -106,81 +108,78 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
         enablePullDown: true,
         header: const ClassicHeader(),
         onRefresh: _onRefresh,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 80,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    const SizedBox(
-                      width: 8.0,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            context.push(cameraPath).then((_) {
-                              _refreshController.requestRefresh();
-                            });
-                          },
-                          child: Container(
-                            width: 56.0,
-                            height: 56.0,
-                            decoration: BoxDecoration(
-                              color: Theme.of(context).colorScheme.primary,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(40.0)),
-                            ),
-                            child: const Center(
-                              child: Icon(Icons.add, color: Colors.white),
-                            ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 80,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  const SizedBox(
+                    width: 8.0,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          context.push(cameraPath).then((_) {
+                            _refreshController.requestRefresh();
+                          });
+                        },
+                        child: Container(
+                          width: 56.0,
+                          height: 56.0,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(40.0)),
+                          ),
+                          child: const Center(
+                            child: Icon(Icons.add, color: Colors.white),
                           ),
                         ),
-                        const SizedBox(height: 4.0),
-                        Text(
-                          AppLocalizations.of(context)!.addStory,
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelSmall
-                              ?.copyWith(color: Colors.black54),
+                      ),
+                      const SizedBox(height: 4.0),
+                      Text(
+                        AppLocalizations.of(context)!.addStory,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelSmall
+                            ?.copyWith(color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    width: 16.0,
+                  ),
+                  ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      var story = randomStories[index];
+                      return GestureDetector(
+                        onTap: () =>
+                            context.push(detailStoryPath, extra: story),
+                        child: CircleStory(
+                          image: story.photoUrl,
+                          name: story.name,
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      width: 16.0,
-                    ),
-                    ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        var story = randomStories[index];
-                        return GestureDetector(
-                          onTap: () =>
-                              context.push(detailStoryPath, extra: story),
-                          child: CircleStory(
-                            image: story.photoUrl,
-                            name: story.name,
-                          ),
-                        );
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(width: 16.0),
-                      itemCount: randomStories.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                    ),
-                    const SizedBox(
-                      width: 16.0,
-                    ),
-                  ],
-                ),
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                    const SizedBox(width: 16.0),
+                    itemCount: randomStories.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                  ),
+                  const SizedBox(
+                    width: 16.0,
+                  ),
+                ],
               ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+            ),
+            Expanded(
+              child: ListView.separated(
                 controller: scrollController,
                 itemBuilder: (context, index) {
                   if (index == mainStories.length && context.read<StoriesProvider>().pageItems != null) {
@@ -191,7 +190,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                       ),
                     );
                   }
-
+              
                   var story = mainStories[index];
                   return GestureDetector(
                     onTap: () => context.push(detailStoryPath, extra: story),
@@ -207,11 +206,8 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                 ),
                 itemCount: mainStories.length + (context.read<StoriesProvider>().pageItems != null ? 1 : 0),
               ),
-              const SizedBox(
-                height: 16.0,
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

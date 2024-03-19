@@ -9,7 +9,7 @@ import '../util/constant.dart';
 class StoriesProvider extends ChangeNotifier {
   final ApiService apiService;
   UiState _storiesState = const Idle();
-  List<ListStory> _listStory = [];
+  final List<ListStory> _listStory = [];
   List<ListStory> _randomStory = [];
   bool _needUpdate = false;
 
@@ -21,24 +21,30 @@ class StoriesProvider extends ChangeNotifier {
   bool get needUpdate => _needUpdate;
 
   int? pageItems = 1;
-  int sizeItems = 10;
+  int sizeItems = 5;
 
   Future<void> getStories() async {
+    if (_storiesState is Loading && pageItems != 1) {
+      return;
+    }
+
     if (pageItems == 1) {
       _storiesState = const Loading();
       notifyListeners();
     }
+
     try {
       var session = await PreferencesHelper().getSession();
       final stories = await apiService.getStories(session!.token, pageItems!, sizeItems);
-
-      _listStory = List.from(stories)
-        ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
       if (pageItems == 1) {
         _randomStory = List.from(stories)..shuffle();
         _randomStory = _randomStory.take(5).toList();
       }
+
+      _listStory.addAll(stories);
+      _listStory.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
       _storiesState = Success(stories);
       if (stories.length < sizeItems) {
         pageItems = null;
@@ -51,6 +57,12 @@ class StoriesProvider extends ChangeNotifier {
           Error(exception.toString().replaceAll("Exception: ", textEmpty));
       notifyListeners();
     }
+  }
+
+  void clearStory() {
+    _listStory.clear();
+    pageItems = 1;
+    notifyListeners();
   }
 
   void updateStory() {

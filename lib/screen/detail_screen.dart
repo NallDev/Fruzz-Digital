@@ -17,11 +17,15 @@ class MyDetailScreen extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Image.network(
-                  listStory.photoUrl,
+                FadeInImage.assetNetwork(
+                  placeholder: 'assets/images/placeholder.png',
+                  image: listStory.photoUrl,
                   fit: BoxFit.fitWidth,
                   width: double.infinity,
-                  height: 300.0,
+                  height: 300,
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset('assets/images/image_not_available.jpg', fit: BoxFit.cover);
+                  },
                 ),
                 const SafeArea(
                   child: BackButton(color: Color(primaryColor)),

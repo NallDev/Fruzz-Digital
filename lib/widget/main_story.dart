@@ -28,12 +28,21 @@ class MainStory extends StatelessWidget {
               Container(
                 height: 32,
                 width: 32,
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(
                     Radius.circular(32),
                   ),
-                  image: DecorationImage(
-                      image: NetworkImage(image), fit: BoxFit.cover),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(32),
+                  child: FadeInImage.assetNetwork(
+                    placeholder: 'assets/images/placeholder.png',
+                    image: image,
+                    fit: BoxFit.cover,
+                    imageErrorBuilder: (context, error, stackTrace) {
+                      return Image.asset('assets/images/image_not_available.jpg', fit: BoxFit.cover);
+                    },
+                  ),
                 ),
               ),
               const SizedBox(
@@ -56,11 +65,15 @@ class MainStory extends StatelessWidget {
         const SizedBox(
           height: 4.0,
         ),
-        Image.network(
-          image,
+        FadeInImage.assetNetwork(
+          placeholder: 'assets/images/placeholder.png',
+          image: image,
           fit: BoxFit.cover,
           width: double.infinity,
           height: 200,
+          imageErrorBuilder: (context, error, stackTrace) {
+            return Image.asset('assets/images/image_not_available.jpg', fit: BoxFit.cover);
+          },
         ),
         const SizedBox(
           height: 4.0,

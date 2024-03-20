@@ -5,6 +5,7 @@ import 'package:my_story_app/data/model/stories/stories_response.dart';
 import 'package:my_story_app/screen/camera_screen.dart';
 import 'package:my_story_app/screen/detail_screen.dart';
 import 'package:my_story_app/screen/login_screen.dart';
+import 'package:my_story_app/screen/pick_location_screen.dart';
 import 'package:my_story_app/screen/post_story_screen.dart';
 import 'package:my_story_app/screen/register_screen.dart';
 import 'package:my_story_app/screen/welcome_screen.dart';
@@ -46,7 +47,11 @@ GoRouter createAppRouter(bool hasSession) {
         path: detailStoryPath,
         builder: (context, state) =>
             MyDetailScreen(listStory: state.extra as ListStory),
-      )
+      ),
+      GoRoute(
+        path: pickLocationPath,
+        builder: (context, state) => const MyPickLocationScreen(),
+      ),
     ],
   );
 }

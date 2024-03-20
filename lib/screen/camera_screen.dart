@@ -81,15 +81,16 @@ class MyCameraScreen extends StatelessWidget {
                                 color: Color(primaryColor),
                               ),
                               onPressed: () async {
+                                context
+                                    .read<CameraProvider>()
+                                    .disposeCameraController();
+
                                 var file = await _picker.pickImage(
                                     source: ImageSource.gallery);
 
                                 if (file == null) return;
                                 if (!context.mounted) return;
                                 var imageFile = File(file.path);
-                                context
-                                    .read<CameraProvider>()
-                                    .disposeCameraController();
                                 context
                                     .push(postStoryPath, extra: imageFile)
                                     .then((_) {

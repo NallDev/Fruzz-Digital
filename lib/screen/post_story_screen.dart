@@ -72,9 +72,10 @@ class MyPostStoryScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.8,
-                        width: double.infinity,
-                        child: Stack(children: [
+                      height: MediaQuery.of(context).size.height * 0.3,
+                      width: double.infinity,
+                      child: Stack(
+                        children: [
                           Container(
                             decoration: BoxDecoration(
                                 image: DecorationImage(
@@ -101,47 +102,105 @@ class MyPostStoryScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                        ])),
+                        ],
+                      ),
+                    ),
                     Expanded(
+                      flex: 1,
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Consumer<FormProvider>(
                           builder: (context, formProvider, child) {
-                            return Row(
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: MyTextInput.basic(
-                                      hint: AppLocalizations.of(context)!
-                                          .description,
-                                      field: descriptionPost,
-                                      formProvider: formProvider,
-                                      useTextEmptyValidator: true),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: MyTextInput.disable(
+                                          hint: formProvider.getValue(latitude).isNotEmpty ? formProvider.getValue(latitude) : latitude,
+                                          field: latitude,
+                                          formProvider: formProvider,
+                                          useTextEmptyValidator: true),
+                                    ),
+                                    const SizedBox(
+                                      width: 16.0,
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: MyTextInput.disable(
+                                          hint: formProvider.getValue(longitude).isNotEmpty ? formProvider.getValue(longitude) : longitude,
+                                          field: longitude,
+                                          formProvider: formProvider,
+                                          useTextEmptyValidator: true),
+                                    ),
+                                    const SizedBox(
+                                      width: 16.0,
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: IconButton(
+                                        onPressed: () => context.push(pickLocationPath),
+                                        icon: Icon(
+                                          Icons.add_location,
+                                          color: Colors.green.shade900,
+                                        ),
+                                        style: IconButton.styleFrom(
+                                          backgroundColor: Colors.greenAccent,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 const SizedBox(
-                                  width: 16.0,
+                                  height: 16.0,
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: formProvider
-                                              .isValid(descriptionPost) ==
-                                          true
-                                      ? MyButton.filled(
-                                          text: AppLocalizations.of(context)!
-                                              .send,
-                                          onPressed: () {
-                                            context
-                                                .read<PostStoryProvider>()
-                                                .postStory(
-                                                    imagePath,
-                                                    formProvider.getValue(
-                                                        descriptionPost));
-                                          },
-                                        )
-                                      : MyButton.disabled(
-                                          text: AppLocalizations.of(context)!
-                                              .send,
-                                        ),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: MyTextInput.basic(
+                                        hint: AppLocalizations.of(context)!
+                                            .description,
+                                        field: descriptionPost,
+                                        formProvider: formProvider,
+                                        useTextEmptyValidator: true,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 16.0,
+                                    ),
+                                    Expanded(
+                                      flex: 1,
+                                      child: formProvider.isValid(
+                                                      descriptionPost) ==
+                                                  true &&
+                                              formProvider.isValid(latitude) ==
+                                                  true &&
+                                              formProvider.isValid(longitude) ==
+                                                  true
+                                          ? MyButton.filled(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .send,
+                                              onPressed: () {
+                                                context
+                                                    .read<PostStoryProvider>()
+                                                    .postStory(
+                                                        imagePath,
+                                                        formProvider.getValue(
+                                                            descriptionPost));
+                                              },
+                                            )
+                                          : MyButton.disabled(
+                                              text:
+                                                  AppLocalizations.of(context)!
+                                                      .send,
+                                            ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             );

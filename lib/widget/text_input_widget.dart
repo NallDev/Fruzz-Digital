@@ -14,6 +14,7 @@ class MyTextInput extends StatefulWidget {
   final bool? useLengthValidator;
   final bool? useTextEmptyValidator;
   final String field;
+  final bool isEnable;
 
   const MyTextInput._({
     Key? key,
@@ -25,6 +26,7 @@ class MyTextInput extends StatefulWidget {
     this.useEmailValidator = false,
     this.useTextEmptyValidator = false,
     required this.field,
+    this.isEnable = true,
   }) : super(key: key);
 
   static MyTextInput basic(
@@ -67,6 +69,23 @@ class MyTextInput extends StatefulWidget {
       formProvider: formProvider,
       useLengthValidator: useLengthValidator,
       field: field,
+      useTextEmptyValidator: useTextEmptyValidator,
+    );
+  }
+
+  static MyTextInput disable({
+    Key? key,
+    required String hint,
+    FormProvider? formProvider,
+    required String field,
+    bool? useTextEmptyValidator = false,
+  }) {
+    return MyTextInput._(
+      key: key,
+      hint: hint,
+      formProvider: formProvider,
+      field: field,
+      isEnable: false,
       useTextEmptyValidator: useTextEmptyValidator,
     );
   }
@@ -115,6 +134,7 @@ class MyTextInputState extends State<MyTextInput> {
     return TextField(
       controller: _controller,
       obscureText: _obscureText,
+      enabled: widget.isEnable,
       style:
           const TextStyle(color: Color(darkColor), fontWeight: FontWeight.w600),
       decoration: InputDecoration(

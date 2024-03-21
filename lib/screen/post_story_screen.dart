@@ -73,7 +73,7 @@ class MyPostStoryScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.3,
+                      height: MediaQuery.of(context).size.height * 0.7,
                       width: double.infinity,
                       child: Stack(
                         children: [

@@ -4,8 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:my_story_app/provider/form_provider.dart';
+import 'package:my_story_app/theme/text_style.dart';
 import 'package:my_story_app/util/constant.dart';
+import 'package:my_story_app/util/ui_helper.dart';
 import 'package:provider/provider.dart';
+
+import '../theme/color_schemes.dart';
+import '../util/common.dart';
+import '../widget/button_widget.dart';
 
 class MyPickLocationScreen extends StatefulWidget {
   const MyPickLocationScreen({super.key});
@@ -17,14 +23,13 @@ class MyPickLocationScreen extends StatefulWidget {
 class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
   GoogleMapController? _mapController;
   Marker? _centerMarker;
-  String _address = '', _country = '', _postalCode = '';
+  String _address = '';
   LatLng _lastMapPosition = const LatLng(-6.175542,
-      106.826073); // Default to Buenos Aires, replace with any default position you like.
+      106.826073);
 
   @override
   void initState() {
     super.initState();
-    _determinePosition();
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -43,38 +48,33 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
 
     Placemark place = placemarks[0];
     setState(() {
-      _address = '${place.street}, ${place.subLocality}, ${place.locality}';
-      _country = place.country!;
-      _postalCode = place.postalCode!;
+      _address = "${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}";
     });
   }
 
-  Future<void> _determinePosition() async {
-    bool serviceEnabled;
+  void _navigateToCurrentLocation() async {
     LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
+        if (!mounted) return;
+        return showToast(context, AppLocalizations.of(context)!.locationPermission);
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      if (!mounted) return;
+      return showToast(context, AppLocalizations.of(context)!.locationPermission);
     }
-
     Position position = await Geolocator.getCurrentPosition();
-    setState(() {
-      _lastMapPosition = LatLng(position.latitude, position.longitude);
-    });
+    _lastMapPosition = LatLng(position.latitude, position.longitude);
+
+    _mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: _lastMapPosition,
+      zoom: 16.0,
+    )));
   }
 
   @override
@@ -87,6 +87,9 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
             onMapCreated: _onMapCreated,
             onCameraMove: _onCameraMove,
             onCameraIdle: _onCameraIdle,
+            zoomControlsEnabled: false,
+            buildingsEnabled: false,
+            trafficEnabled: false,
             initialCameraPosition: CameraPosition(
               target: _lastMapPosition,
               zoom: 16.0,
@@ -102,6 +105,8 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
           Positioned(
             bottom: 50,
             child: Container(
+              height: 160,
+              width: 300,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -111,13 +116,11 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
                 ],
               ),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Text('Address: $_address'),
-                  Text('Country: $_country'),
-                  Text('Postal Code: $_postalCode'),
+                  Expanded(child: Text('Address: $_address', overflow: TextOverflow.ellipsis, maxLines: 3, style: myTextTheme.labelMedium,)),
                   const SizedBox(height: 8),
-                  ElevatedButton(
+                  MyButton.filled(
+                    text: AppLocalizations.of(context)!.saveLocation,
                     onPressed: () {
                       context.read<FormProvider>().setValue(
                           latitude, _lastMapPosition.latitude.toString());
@@ -125,7 +128,6 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
                           longitude, _lastMapPosition.longitude.toString());
                       context.pop();
                     },
-                    child: const Text('Save Location'),
                   ),
                 ],
               ),
@@ -133,6 +135,12 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _navigateToCurrentLocation,
+        backgroundColor: const Color(darkColor),
+        child: const Icon(Icons.my_location, color: Colors.white,),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class CircleStory extends StatelessWidget {
   final String image;
   final String name;
+
   const CircleStory({super.key, required this.image, required this.name});
 
   @override
@@ -12,15 +13,27 @@ class CircleStory extends StatelessWidget {
       width: 56.0,
       child: Column(
         children: [
-          const SizedBox(
-            height: 3.0,
-          ),
-          AnimatedDashedCircle().show(
-            image: NetworkImage(image),
-            autoPlay: true,
-            contentPadding: 2,
-            height: 54.0,
-            borderWidth: 5,
+          Container(
+            width: 56.0,
+            height: 56.0,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Colors.red, // Border color
+                width: 2.0, // Border width
+              ),
+            ),
+            child: ClipOval(
+              child: Padding(
+                padding: EdgeInsets.all(2.0), // The transparent space width
+                child: ClipOval(
+                  child: Image.network(
+                    image,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
           ),
           const SizedBox(height: 4.0),
           Text(

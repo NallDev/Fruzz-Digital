@@ -9,6 +9,8 @@ import 'package:my_story_app/theme/color_schemes.dart';
 import 'package:my_story_app/util/constant.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/form_provider.dart';
+
 class MyCameraScreen extends StatelessWidget {
   final ImagePicker _picker = ImagePicker();
 
@@ -121,7 +123,16 @@ class MyCameraScreen extends StatelessWidget {
                                 if (file != null) {
                                   if (!context.mounted) return;
                                   var imageFile = File(file.path);
-                                  context.push(postStoryPath, extra: imageFile);
+                                  context
+                                      .push(postStoryPath, extra: imageFile)
+                                      .then((value) => {
+                                            context
+                                                .read<FormProvider>()
+                                                .setValue(latitude, ""),
+                                            context
+                                                .read<FormProvider>()
+                                                .setValue(longitude, "")
+                                          });
                                 }
                               },
                             ),

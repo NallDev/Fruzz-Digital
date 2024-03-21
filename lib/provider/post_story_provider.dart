@@ -17,7 +17,7 @@ class PostStoryProvider extends ChangeNotifier {
 
   UiState get postStoryState => _postStoryState;
 
-  void postStory(File imageFile, String description) async {
+  void postStory(File imageFile, String description, String latitude, String longitude) async {
     _postStoryState = const Loading();
     notifyListeners();
     var image = await imageCompressing(imageFile);
@@ -25,7 +25,7 @@ class PostStoryProvider extends ChangeNotifier {
       if (image == null) throw ("Failed to compress");
       var session = await PreferencesHelper().getSession();
       var postStory =
-          apiService.postStory(File(image.path), description, session!.token);
+          apiService.postStory(File(image.path), description, latitude, longitude, session!.token);
 
       _postStoryState = Success(postStory);
     } catch (exception) {

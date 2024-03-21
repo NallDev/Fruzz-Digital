@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_story_app/data/network/api_service.dart';
+import 'package:my_story_app/provider/form_provider.dart';
 import 'package:my_story_app/provider/stories_provider.dart';
 import 'package:my_story_app/routing/app_route.dart';
 import 'package:my_story_app/theme/color_schemes.dart';
@@ -22,6 +23,9 @@ void main() async {
             apiService: ApiService(),
           ),
         ),
+        ChangeNotifierProvider(
+          create: (context) => FormProvider(),
+        )
       ],
       child: MyApp(
         hasSession: hasSession,

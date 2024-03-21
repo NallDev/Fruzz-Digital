@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -77,8 +78,9 @@ class ApiService {
     queryParams["location"] = "1";
 
     try {
-      final response =
-          await http.get(Uri.parse("$_baseUrl/stories").replace(queryParameters: queryParams), headers: headers);
+      final response = await http.get(
+          Uri.parse("$_baseUrl/stories").replace(queryParameters: queryParams),
+          headers: headers);
 
       final stringJson = json.decode(response.body);
       var storiesResponse = StoriesResponse.fromJson(stringJson);
@@ -95,8 +97,8 @@ class ApiService {
     }
   }
 
-  Future<bool> postStory(
-      File imageFile, String description, String token) async {
+  Future<bool> postStory(File imageFile, String description, String latitude,
+      String longitude, String token) async {
     var headers = {
       "Content-type": "multipart/form-data",
       'Authorization': 'Bearer $token',
@@ -104,7 +106,9 @@ class ApiService {
 
     var request = http.MultipartRequest('POST', Uri.parse("$_baseUrl/stories"))
       ..headers.addAll(headers)
-      ..fields['description'] = description;
+      ..fields['description'] = description
+      ..fields['lat'] = latitude
+      ..fields['lon'] = longitude;
 
     try {
       request.files

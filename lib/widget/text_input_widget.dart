@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:my_story_app/util/constant.dart';
+import 'package:provider/provider.dart';
 
 import '../provider/form_provider.dart';
 import '../theme/color_schemes.dart';
@@ -126,6 +127,14 @@ class MyTextInputState extends State<MyTextInput> {
   void _toggleVisibility() {
     setState(() {
       _obscureText = !_obscureText;
+    });
+  }
+
+  void setText(String newText) {
+    setState(() {
+      _controller.value = TextEditingValue(
+        text: newText,
+      );
     });
   }
 

@@ -24,11 +24,10 @@ class MyPostStoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<MyTextInputState> latitudeKey = GlobalKey<MyTextInputState>();
+    GlobalKey<MyTextInputState> longitudeKey = GlobalKey<MyTextInputState>();
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => FormProvider(),
-        ),
         ChangeNotifierProvider(
           create: (context) => PostStoryProvider(
             apiService: ApiService(),
@@ -55,6 +54,8 @@ class MyPostStoryScreen extends StatelessWidget {
             }
             WidgetsBinding.instance.addPostFrameCallback((_) {
               context.read<StoriesProvider>().updateStory();
+              context.read<FormProvider>().setValue(latitude, "");
+              context.read<FormProvider>().setValue(longitude, "");
               context.go(storyPath);
             });
           } else if (state is Error) {
@@ -111,6 +112,15 @@ class MyPostStoryScreen extends StatelessWidget {
                         padding: const EdgeInsets.all(16.0),
                         child: Consumer<FormProvider>(
                           builder: (context, formProvider, child) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              Future.delayed(const Duration(milliseconds: 100),
+                                  () {
+                                latitudeKey.currentState
+                                    ?.setText(formProvider.getValue(latitude));
+                                longitudeKey.currentState
+                                    ?.setText(formProvider.getValue(longitude));
+                              });
+                            });
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -119,10 +129,12 @@ class MyPostStoryScreen extends StatelessWidget {
                                     Expanded(
                                       flex: 2,
                                       child: MyTextInput.disable(
-                                          hint: formProvider.getValue(latitude).isNotEmpty ? formProvider.getValue(latitude) : latitude,
-                                          field: latitude,
-                                          formProvider: formProvider,
-                                          useTextEmptyValidator: true),
+                                        key: latitudeKey,
+                                        hint: latitude,
+                                        field: latitude,
+                                        formProvider: formProvider,
+                                        useTextEmptyValidator: true,
+                                      ),
                                     ),
                                     const SizedBox(
                                       width: 16.0,
@@ -130,10 +142,12 @@ class MyPostStoryScreen extends StatelessWidget {
                                     Expanded(
                                       flex: 2,
                                       child: MyTextInput.disable(
-                                          hint: formProvider.getValue(longitude).isNotEmpty ? formProvider.getValue(longitude) : longitude,
-                                          field: longitude,
-                                          formProvider: formProvider,
-                                          useTextEmptyValidator: true),
+                                        key: longitudeKey,
+                                        hint: longitude,
+                                        field: longitude,
+                                        formProvider: formProvider,
+                                        useTextEmptyValidator: true,
+                                      ),
                                     ),
                                     const SizedBox(
                                       width: 16.0,
@@ -141,7 +155,8 @@ class MyPostStoryScreen extends StatelessWidget {
                                     Expanded(
                                       flex: 1,
                                       child: IconButton(
-                                        onPressed: () => context.push(pickLocationPath),
+                                        onPressed: () =>
+                                            context.push(pickLocationPath),
                                         icon: Icon(
                                           Icons.add_location,
                                           color: Colors.green.shade900,
@@ -189,9 +204,14 @@ class MyPostStoryScreen extends StatelessWidget {
                                                 context
                                                     .read<PostStoryProvider>()
                                                     .postStory(
-                                                        imagePath,
-                                                        formProvider.getValue(
-                                                            descriptionPost));
+                                                      imagePath,
+                                                      formProvider.getValue(
+                                                          descriptionPost),
+                                                      formProvider
+                                                          .getValue(latitude),
+                                                      formProvider
+                                                          .getValue(longitude),
+                                                    );
                                               },
                                             )
                                           : MyButton.disabled(

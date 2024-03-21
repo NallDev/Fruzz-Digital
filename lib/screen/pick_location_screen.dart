@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:my_story_app/provider/form_provider.dart';
@@ -17,7 +18,8 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
   GoogleMapController? _mapController;
   Marker? _centerMarker;
   String _address = '', _country = '', _postalCode = '';
-  LatLng _lastMapPosition = const LatLng(-6.175542, 106.826073); // Default to Buenos Aires, replace with any default position you like.
+  LatLng _lastMapPosition = const LatLng(-6.175542,
+      106.826073); // Default to Buenos Aires, replace with any default position you like.
 
   @override
   void initState() {
@@ -65,18 +67,14 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
 
     Position position = await Geolocator.getCurrentPosition();
     setState(() {
       _lastMapPosition = LatLng(position.latitude, position.longitude);
     });
-  }
-
-  void _saveLocation() {
-    // Implement your save location logic here, possibly involving sending the data to a backend or local storage.
-    print('Saved Location: $_address, $_country, $_postalCode');
   }
 
   @override
@@ -95,7 +93,12 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
             ),
             markers: Set.of(_centerMarker != null ? [_centerMarker!] : []),
           ),
-          const Icon(Icons.location_pin, size: 50, color: Colors.red,), // This icon will act as the marker on the center
+          const Icon(
+            Icons.location_pin,
+            size: 50,
+            color: Colors.red,
+          ),
+          // This icon will act as the marker on the center
           Positioned(
             bottom: 50,
             child: Container(
@@ -114,16 +117,15 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
                   Text('Country: $_country'),
                   Text('Postal Code: $_postalCode'),
                   const SizedBox(height: 8),
-                  Consumer<FormProvider>(
-                    builder: (context, formProvider, child) {
-                      return ElevatedButton(
-                        onPressed: () {
-                          formProvider.setValue(latitude, _lastMapPosition.latitude.toString());
-                          formProvider.setValue(longitude, _lastMapPosition.longitude.toString());
-                        },
-                        child: const Text('Save Location'),
-                      );
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<FormProvider>().setValue(
+                          latitude, _lastMapPosition.latitude.toString());
+                      context.read<FormProvider>().setValue(
+                          longitude, _lastMapPosition.longitude.toString());
+                      context.pop();
                     },
+                    child: const Text('Save Location'),
                   ),
                 ],
               ),

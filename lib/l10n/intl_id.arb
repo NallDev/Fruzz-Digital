@@ -6,7 +6,7 @@
     "password": "Kata Sandi",
     "emailValidatorMsg": "Masukkan alamat email yang valid",
     "charLengthValidatorMsg": "Masukkan minimal 8 karakter",
-    "textEmptyValidatorMsg": "Bidang ini tidak boleh kosong",
+    "textEmptyValidatorMsg": "Wajib di isi",
     "textEmpty": "",
     "sessionNotStoreMsg": "Sesi Anda tidak dapat disimpan",
     "loginGreeting": "Selamat datang kembali! Senang melihat Anda lagi!",

@@ -6,7 +6,7 @@
     "password": "Password",
     "emailValidatorMsg": "Enter a valid email address",
     "charLengthValidatorMsg": "Enter min 8 characters",
-    "textEmptyValidatorMsg": "This field cannot be empty",
+    "textEmptyValidatorMsg": "Must be filled",
     "textEmpty": "",
     "sessionNotStoreMsg": "Your session cannot be store",
     "loginGreeting": "Welcome back! Glad to see you, Again!",

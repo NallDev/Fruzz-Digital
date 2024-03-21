@@ -23,6 +23,7 @@ class _MyDetailScreenState extends State<MyDetailScreen> {
   @override
   void initState() {
     super.initState();
+    print("INI LOKASI USER" + widget.listStory.lat.toString() + widget.listStory.lon.toString());
     userLocation = LatLng(widget.listStory.lat!, widget.listStory.lon!);
     initializePlacemarks();
   }

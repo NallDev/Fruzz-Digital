@@ -94,7 +94,6 @@ class CameraProvider with ChangeNotifier {
   }
 
   void disposeCameraController() {
-    print("DISPOSE CAMERA OK");
     _controller?.dispose();
     _controller = null;
     notifyListeners();

@@ -24,8 +24,7 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
   GoogleMapController? _mapController;
   Marker? _centerMarker;
   String _address = '';
-  LatLng _lastMapPosition = const LatLng(-6.175542,
-      106.826073);
+  LatLng _lastMapPosition = const LatLng(-6.175542, 106.826073);
 
   @override
   void initState() {
@@ -48,7 +47,8 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
 
     Placemark place = placemarks[0];
     setState(() {
-      _address = "${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}";
+      _address =
+          "${place.street}, ${place.subLocality}, ${place.locality}, ${place.postalCode}";
     });
   }
 
@@ -60,13 +60,15 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         if (!mounted) return;
-        return showToast(context, AppLocalizations.of(context)!.locationPermission);
+        return showToast(
+            context, AppLocalizations.of(context)!.locationPermission);
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       if (!mounted) return;
-      return showToast(context, AppLocalizations.of(context)!.locationPermission);
+      return showToast(
+          context, AppLocalizations.of(context)!.locationPermission);
     }
     Position position = await Geolocator.getCurrentPosition();
     _lastMapPosition = LatLng(position.latitude, position.longitude);
@@ -101,7 +103,6 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
             size: 50,
             color: Colors.red,
           ),
-          // This icon will act as the marker on the center
           Positioned(
             bottom: 50,
             child: Container(
@@ -117,7 +118,13 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
               ),
               child: Column(
                 children: <Widget>[
-                  Expanded(child: Text('Address: $_address', overflow: TextOverflow.ellipsis, maxLines: 3, style: myTextTheme.labelMedium,)),
+                  Expanded(
+                      child: Text(
+                    'Address: $_address',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                    style: myTextTheme.labelMedium,
+                  )),
                   const SizedBox(height: 8),
                   MyButton.filled(
                     text: AppLocalizations.of(context)!.saveLocation,
@@ -138,7 +145,10 @@ class _MyPickLocationScreenState extends State<MyPickLocationScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: _navigateToCurrentLocation,
         backgroundColor: const Color(darkColor),
-        child: const Icon(Icons.my_location, color: Colors.white,),
+        child: const Icon(
+          Icons.my_location,
+          color: Colors.white,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
     );

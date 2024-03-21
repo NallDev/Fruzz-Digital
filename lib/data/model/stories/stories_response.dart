@@ -11,7 +11,8 @@ class StoriesResponse with _$StoriesResponse {
     @JsonKey(name: "listStory") required List<ListStory> listStory,
   }) = _StoriesResponse;
 
-  factory StoriesResponse.fromJson(Map<String, dynamic> json) => _$StoriesResponseFromJson(json);
+  factory StoriesResponse.fromJson(Map<String, dynamic> json) =>
+      _$StoriesResponseFromJson(json);
 }
 
 @Freezed()
@@ -26,5 +27,6 @@ class ListStory with _$ListStory {
     double? lon,
   }) = _ListStory;
 
-  factory ListStory.fromJson(Map<String, dynamic> json) => _$ListStoryFromJson(json);
+  factory ListStory.fromJson(Map<String, dynamic> json) =>
+      _$ListStoryFromJson(json);
 }

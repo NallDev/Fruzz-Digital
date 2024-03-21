@@ -1,4 +1,3 @@
-import 'package:animated_dashed_circle/animated_dashed_circle.dart';
 import 'package:flutter/material.dart';
 
 class CircleStory extends StatelessWidget {
@@ -19,13 +18,13 @@ class CircleStory extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: Colors.red, // Border color
-                width: 2.0, // Border width
+                color: Colors.red,
+                width: 2.0,
               ),
             ),
             child: ClipOval(
               child: Padding(
-                padding: EdgeInsets.all(2.0), // The transparent space width
+                padding: const EdgeInsets.all(2.0),
                 child: ClipOval(
                   child: Image.network(
                     image,

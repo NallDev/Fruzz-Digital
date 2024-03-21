@@ -35,7 +35,8 @@ class StoriesProvider extends ChangeNotifier {
 
     try {
       var session = await PreferencesHelper().getSession();
-      final stories = await apiService.getStories(session!.token, pageItems!, sizeItems);
+      final stories =
+          await apiService.getStories(session!.token, pageItems!, sizeItems);
 
       if (pageItems == 1) {
         _randomStory = List.from(stories)..shuffle();

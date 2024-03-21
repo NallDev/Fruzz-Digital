@@ -123,7 +123,7 @@ class ApiService {
         if (jsonResponse['error'] == false) {
           return true;
         } else {
-          return false;
+          throw Exception(jsonResponse['message'].toString());
         }
       } else {
         throw Exception(jsonResponse['message'].toString());

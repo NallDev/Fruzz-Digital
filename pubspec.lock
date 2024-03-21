@@ -17,14 +17,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.1"
-  animated_dashed_circle:
-    dependency: "direct main"
-    description:
-      name: animated_dashed_circle
-      sha256: fc71403e199dd3eb412fd18a5a26acda1bfb7683a1fa59d11720a56f5522f85c
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.5"
   archive:
     dependency: transitive
     description:

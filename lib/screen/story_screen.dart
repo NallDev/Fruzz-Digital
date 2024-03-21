@@ -5,6 +5,7 @@ import 'package:my_story_app/provider/stories_provider.dart';
 import 'package:my_story_app/theme/text_style.dart';
 import 'package:my_story_app/util/constant.dart';
 import 'package:my_story_app/util/ui_helper.dart';
+import 'package:my_story_app/util/ui_state.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -29,7 +30,8 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
     _refreshController = RefreshController(initialRefresh: true);
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels >= scrollController.position.maxScrollExtent) {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
         if (context.read<StoriesProvider>().pageItems != null) {
           context.read<StoriesProvider>().getStories();
         }
@@ -58,6 +60,13 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
     final randomStories = context.watch<StoriesProvider>().randomStory;
     final mainStories = context.watch<StoriesProvider>().listStory;
     final needUpdate = context.watch<StoriesProvider>().needUpdate;
+    final storiesState = context.watch<StoriesProvider>().storiesState;
+
+    if (storiesState is Error) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showToast(context, storiesState.message);
+      });
+    }
 
     if (needUpdate) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -133,7 +142,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                           decoration: BoxDecoration(
                             color: Theme.of(context).colorScheme.primary,
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(40.0)),
+                                const BorderRadius.all(Radius.circular(40.0)),
                           ),
                           child: const Center(
                             child: Icon(Icons.add, color: Colors.white),
@@ -167,7 +176,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                       );
                     },
                     separatorBuilder: (context, index) =>
-                    const SizedBox(width: 16.0),
+                        const SizedBox(width: 16.0),
                     itemCount: randomStories.length,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
@@ -182,7 +191,8 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
               child: ListView.separated(
                 controller: scrollController,
                 itemBuilder: (context, index) {
-                  if (index == mainStories.length && context.read<StoriesProvider>().pageItems != null) {
+                  if (index == mainStories.length &&
+                      context.read<StoriesProvider>().pageItems != null) {
                     return const Center(
                       child: Padding(
                         padding: EdgeInsets.all(8),
@@ -190,7 +200,7 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                       ),
                     );
                   }
-              
+
                   var story = mainStories[index];
                   return GestureDetector(
                     onTap: () => context.push(detailStoryPath, extra: story),
@@ -204,7 +214,8 @@ class _MyStoryScreenState extends State<MyStoryScreen> {
                 separatorBuilder: (context, index) => const SizedBox(
                   height: 16,
                 ),
-                itemCount: mainStories.length + (context.read<StoriesProvider>().pageItems != null ? 1 : 0),
+                itemCount: mainStories.length +
+                    (context.read<StoriesProvider>().pageItems != null ? 1 : 0),
               ),
             ),
           ],

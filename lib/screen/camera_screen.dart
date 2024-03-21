@@ -97,6 +97,12 @@ class MyCameraScreen extends StatelessWidget {
                                     .push(postStoryPath, extra: imageFile)
                                     .then((_) {
                                   context
+                                      .read<FormProvider>()
+                                      .setValue(latitude, "");
+                                  context
+                                      .read<FormProvider>()
+                                      .setValue(longitude, "");
+                                  context
                                       .read<CameraProvider>()
                                       .reinitializeCamera();
                                 });

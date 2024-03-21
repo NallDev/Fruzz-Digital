@@ -4,25 +4,25 @@ part 'login_response.g.dart';
 part 'login_response.freezed.dart';
 
 @Freezed()
-class LoginResponse with _$LoginResponse{
-
+class LoginResponse with _$LoginResponse {
   const factory LoginResponse({
     required bool error,
     required String message,
     LoginResult? loginResult,
   }) = _LoginResponse;
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json) => _$LoginResponseFromJson(json);
+  factory LoginResponse.fromJson(Map<String, dynamic> json) =>
+      _$LoginResponseFromJson(json);
 }
 
 @Freezed()
 class LoginResult with _$LoginResult {
-
   const factory LoginResult({
     required String userId,
     required String name,
     required String token,
   }) = _LoginResult;
 
-  factory LoginResult.fromJson(Map<String, dynamic> json) => _$LoginResultFromJson(json);
+  factory LoginResult.fromJson(Map<String, dynamic> json) =>
+      _$LoginResultFromJson(json);
 }

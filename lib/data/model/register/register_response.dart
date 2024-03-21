@@ -10,5 +10,6 @@ class RegisterResponse with _$RegisterResponse {
     required String message,
   }) = _RegisterResponse;
 
-  factory RegisterResponse.fromJson(Map<String, dynamic> json) => _$RegisterResponseFromJson(json);
+  factory RegisterResponse.fromJson(Map<String, dynamic> json) =>
+      _$RegisterResponseFromJson(json);
 }

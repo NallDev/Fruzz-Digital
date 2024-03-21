@@ -40,7 +40,9 @@ class MainStory extends StatelessWidget {
                     image: image,
                     fit: BoxFit.cover,
                     imageErrorBuilder: (context, error, stackTrace) {
-                      return Image.asset('assets/images/image_not_available.jpg', fit: BoxFit.cover);
+                      return Image.asset(
+                          'assets/images/image_not_available.jpg',
+                          fit: BoxFit.cover);
                     },
                   ),
                 ),
@@ -72,7 +74,8 @@ class MainStory extends StatelessWidget {
           width: double.infinity,
           height: 200,
           imageErrorBuilder: (context, error, stackTrace) {
-            return Image.asset('assets/images/image_not_available.jpg', fit: BoxFit.cover);
+            return Image.asset('assets/images/image_not_available.jpg',
+                fit: BoxFit.cover);
           },
         ),
         const SizedBox(

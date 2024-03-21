@@ -23,7 +23,6 @@ class _MyDetailScreenState extends State<MyDetailScreen> {
   @override
   void initState() {
     super.initState();
-    print("INI LOKASI USER" + widget.listStory.lat.toString() + widget.listStory.lon.toString());
     userLocation = LatLng(widget.listStory.lat!, widget.listStory.lon!);
     initializePlacemarks();
   }
@@ -34,7 +33,8 @@ class _MyDetailScreenState extends State<MyDetailScreen> {
 
     if (placemarks.isNotEmpty) {
       var placemark = placemarks.first;
-      var address = "${placemark.street}, ${placemark.locality}, ${placemark.postalCode}";
+      var address =
+          "${placemark.street}, ${placemark.locality}, ${placemark.postalCode}";
 
       final marker = Marker(
         markerId: MarkerId(widget.listStory.name),
